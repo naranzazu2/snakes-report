@@ -100,6 +100,10 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./index.html#story-title"> 
+<span class="menu-text">Story</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link active" href="./about.html" aria-current="page"> 
 <span class="menu-text">About</span></a>
   </li>  
@@ -137,20 +141,18 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="a-short-practical-reference" class="level2">
-<h2 class="anchored" data-anchor-id="a-short-practical-reference">A short, practical reference</h2>
-<p>Snakebite Atlas is a small educational website about what to do after a suspected snakebite. It focuses on simple actions that are useful before professional help arrives, without encouraging people to identify or handle a snake.</p>
+<section id="reading-the-taxonomy" class="level2">
+<h2 class="anchored" data-anchor-id="reading-the-taxonomy">Reading the taxonomy</h2>
+<p>The atlas follows a simple path through the snake family tree: <strong>Serpentes → family → genus → species</strong>. Serpentes is the broad group containing snakes. A family gathers related genera, a genus gathers closely related species, and a species identifies one distinct snake.</p>
+<p>The <strong>Snake Taxonomy Galaxy</strong> begins with Snakes at the center and reveals families, representative genera, and individual species as you select each branch. The <strong>Follow This Snake</strong> story uses one species as a guide, then expands outward to show its relatives in the same genus.</p>
 </section>
-<section id="what-guides-the-information" class="level2">
-<h2 class="anchored" data-anchor-id="what-guides-the-information">What guides the information?</h2>
-<p>The advice follows common first-aid guidance from public-health organizations: prioritize emergency medical care, reduce movement, and avoid harmful home remedies. Local emergency numbers and poison-center services vary by country, so visitors should use the services available where they live.</p>
-</section>
-<section id="why-this-topic-matters" class="level2">
-<h2 class="anchored" data-anchor-id="why-this-topic-matters">Why this topic matters</h2>
-<p>Snakebite envenoming is a neglected public-health problem in many parts of the world. Fast access to appropriate treatment can make a meaningful difference, especially when a person is monitored by trained professionals.</p>
-<section id="keep-learning" class="level3 about-note">
-<h3 class="anchored" data-anchor-id="keep-learning">Keep learning</h3>
-<p>For clinical decisions, use guidance from your local health department, emergency service, or poison center. This page is a starting point for awareness, not a diagnosis tool.</p>
+<section id="where-the-taxonomy-comes-from" class="level2">
+<h2 class="anchored" data-anchor-id="where-the-taxonomy-comes-from">Where the taxonomy comes from</h2>
+<p>The visualizations use the project dataset in <code>data/snakes-search-results.csv</code>. Each record supplies a scientific species name, an authority, and a Reptile Database link. Family and genus relationships are derived from the scientific name and the site’s taxonomy mapping; species photographs and common names are retrieved from iNaturalist when available.</p>
+<p>Because the dataset does not include measurements such as body length, weight, habitat, or geographic range, the supporting comparisons focus on what the data can document directly: the number of records in a family or genus and the relationships between their names.</p>
+<section id="about-this-atlas" class="level3 about-note">
+<h3 class="anchored" data-anchor-id="about-this-atlas">About this atlas</h3>
+<p>This page explains the taxonomy data and visualizations used throughout Snake Atlas.</p>
 </section>
 
 
@@ -230,7 +232,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/naranzazu2\.github\.io\/snakes-report\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
