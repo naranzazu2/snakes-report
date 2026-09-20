@@ -2,20 +2,20 @@
 title: "About the Atlas"
 ---
 
-## A short, practical reference
+## Reading the taxonomy
 
-Snakebite Atlas is a small educational website about what to do after a suspected snakebite. It focuses on simple actions that are useful before professional help arrives, without encouraging people to identify or handle a snake.
+The atlas follows a simple path through the snake family tree: **Serpentes → family → genus → species**. Serpentes is the broad group containing snakes. A family gathers related genera, a genus gathers closely related species, and a species identifies one distinct snake.
 
-## What guides the information?
+The **Snake Taxonomy Galaxy** begins with Snakes at the center and reveals families, representative genera, and individual species as you select each branch. The **Follow This Snake** story uses one species as a guide, then expands outward to show its relatives in the same genus.
 
-The advice follows common first-aid guidance from public-health organizations: prioritize emergency medical care, reduce movement, and avoid harmful home remedies. Local emergency numbers and poison-center services vary by country, so visitors should use the services available where they live.
+## Where the taxonomy comes from
 
-## Why this topic matters
+The visualizations use the project dataset in `data/snakes-search-results.csv`. Each record supplies a scientific species name, an authority, and a Reptile Database link. Family and genus relationships are derived from the scientific name and the site's taxonomy mapping; species photographs and common names are retrieved from iNaturalist when available.
 
-Snakebite envenoming is a neglected public-health problem in many parts of the world. Fast access to appropriate treatment can make a meaningful difference, especially when a person is monitored by trained professionals.
+Because the dataset does not include measurements such as body length, weight, habitat, or geographic range, the supporting comparisons focus on what the data can document directly: the number of records in a family or genus and the relationships between their names.
 
 ::: {.about-note}
-### Keep learning
+### About this atlas
 
-For clinical decisions, use guidance from your local health department, emergency service, or poison center. This page is a starting point for awareness, not a diagnosis tool.
+This page explains the taxonomy data and visualizations used throughout Snake Atlas.
 :::
