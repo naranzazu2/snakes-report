@@ -1,0 +1,21 @@
+---
+title: "About the Atlas"
+---
+
+## A short, practical reference
+
+Snakebite Atlas is a small educational website about what to do after a suspected snakebite. It focuses on simple actions that are useful before professional help arrives, without encouraging people to identify or handle a snake.
+
+## What guides the information?
+
+The advice follows common first-aid guidance from public-health organizations: prioritize emergency medical care, reduce movement, and avoid harmful home remedies. Local emergency numbers and poison-center services vary by country, so visitors should use the services available where they live.
+
+## Why this topic matters
+
+Snakebite envenoming is a neglected public-health problem in many parts of the world. Fast access to appropriate treatment can make a meaningful difference, especially when a person is monitored by trained professionals.
+
+::: {.about-note}
+### Keep learning
+
+For clinical decisions, use guidance from your local health department, emergency service, or poison center. This page is a starting point for awareness, not a diagnosis tool.
+:::

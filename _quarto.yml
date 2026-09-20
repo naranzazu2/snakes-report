@@ -1,0 +1,22 @@
+project:
+  type: website
+  resources:
+    - data/snakes-search-results.csv
+
+website:
+  title: "Snake Atlas"
+  navbar:
+    background: "#183b3f"
+    foreground: "#fffaf0"
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: false
+    page-layout: full

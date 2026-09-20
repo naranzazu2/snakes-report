@@ -1,0 +1,545 @@
+---
+title: "Snake Atlas"
+---
+
+::: {.hero}
+<p class="site-intro">Explore the world of snakes through their living family tree, from broad families to individual species. Select a branch to reveal more detail, then choose a species to view its name, image, and source record.</p>
+<div class="galaxy-section">
+<h2>Snake Taxonomy Galaxy</h2>
+<p class="galaxy-intro">A living map of the taxonomy: Snakes at the center, families spreading outward, and species drifting into view as the network opens.</p>
+<div class="galaxy-toolbar">
+<div class="galaxy-search-wrap">
+<input id="galaxy-search" type="search" placeholder="Search families, genera, or species" aria-label="Search taxonomy galaxy" />
+<button id="galaxy-search-btn" type="button">Search</button>
+</div>
+<div class="galaxy-actions">
+<button id="galaxy-reset-view" type="button">Reset View</button>
+</div>
+<div class="galaxy-zoom-controls" aria-label="Zoom controls">
+<button id="galaxy-zoom-out" type="button" aria-label="Zoom out">−</button>
+<button id="galaxy-zoom-in" type="button" aria-label="Zoom in">+</button>
+</div>
+</div>
+<div class="galaxy-legend" aria-label="Galaxy legend">
+<span><i class="legend-dot legend-root"></i>Snakes</span>
+<span><i class="legend-dot legend-family"></i>Families</span>
+<span><i class="legend-dot legend-genus"></i>Representative genera</span>
+<span><i class="legend-dot legend-species"></i>Selected genus species</span>
+</div>
+<div class="galaxy-layout">
+<div id="galaxy-viewport" class="galaxy-viewport">
+<svg id="galaxy-svg" viewBox="0 0 1000 700" role="img" aria-label="Snake taxonomy galaxy">
+<g id="galaxy-transform">
+<g id="galaxy-links"></g>
+<g id="galaxy-nodes"></g>
+</g>
+</svg>
+</div>
+<div class="galaxy-panel">
+<div id="galaxy-empty" class="galaxy-empty">
+<p>Select a family, genus, or species to inspect its branch.</p>
+</div>
+<div id="galaxy-card" class="galaxy-card" hidden>
+<div class="galaxy-badges">
+<span id="galaxy-family-pill" class="galaxy-pill"></span>
+<span id="galaxy-genus-pill" class="galaxy-pill"></span>
+</div>
+<h3 id="galaxy-species-name"></h3>
+<p id="galaxy-common-name" class="galaxy-common-name"></p>
+<div id="galaxy-image-wrap" class="galaxy-image-wrap" hidden>
+<img id="galaxy-species-image" alt="" />
+<p id="galaxy-image-credit" class="galaxy-image-credit"></p>
+</div>
+<dl class="galaxy-meta">
+<div><dt>Family</dt><dd id="galaxy-family-meta"></dd></div>
+<div><dt>Genus</dt><dd id="galaxy-genus-meta"></dd></div>
+<div><dt>Scientific name</dt><dd id="galaxy-scientific-meta"></dd></div>
+</dl>
+<a id="galaxy-link" class="tax-link" href="#" target="_blank" rel="noopener">Open species record ↗</a>
+</div>
+</div>
+</div>
+</div>
+
+Snakebites are serious, but a clear first response matters. This small guide brings together the essential ideas: recognize the danger, keep the person still, and seek emergency medical care quickly.
+
+:::
+
+::: {.quick-facts}
+### If a bite happens
+
+1. Move away from the snake and keep calm.
+2. Call local emergency services immediately.
+3. Keep the person and the affected limb as still as possible.
+4. Do not cut the wound, suck out venom, or apply a tourniquet.
+:::
+
+::: {.bite-estimate}
+### A 20-year global estimate
+
+The World Health Organization estimates that **5.4 million people are bitten by snakes worldwide each year**. If that annual estimate stayed constant, approximately **108 million bites** would occur over 20 years.
+
+This is a population-level estimate, not a count for the selected species. The WHO also estimates 1.8 to 2.7 million envenomings and 81,410 to 137,880 deaths each year.
+
+[Read the WHO fact sheet](https://www.who.int/news-room/fact-sheets/detail/snakebite-envenoming)
+:::
+
+## Read the signs
+
+Pain, swelling, puncture marks, bruising, weakness, nausea, or trouble breathing can all be warning signs. Symptoms may change over time, so medical evaluation is important even when the bite looks small.
+
+::: {.callout-warning}
+## Important
+
+This website is educational and is not a substitute for emergency care. Never try to catch or handle the snake. If someone has been bitten, contact emergency services or a poison center now.
+:::
+
+<script>
+let snakeRecords = [];
+const commonNameLookup = new Map();
+
+const familyByGenus = {
+	Acanthophis: "Elapidae", Aipysurus: "Elapidae", Bungarus: "Elapidae", Dendroaspis: "Elapidae",
+	Laticauda: "Elapidae", Micruroides: "Elapidae", Naja: "Elapidae", Oxyuranus: "Elapidae",
+	Pseudohaje: "Elapidae", Sinomicrurus: "Elapidae", Walterinnesia: "Elapidae",
+	Acrochordus: "Acrochordidae", Anilius: "Aniliidae", Antaresia: "Pythonidae", Apodora: "Pythonidae",
+	Aspidites: "Pythonidae", Bothrochilus: "Pythonidae", Liasis: "Pythonidae", Morelia: "Pythonidae",
+	Python: "Pythonidae", Simalia: "Pythonidae", Boa: "Boidae", Corallus: "Boidae",
+	Eunectes: "Boidae", Eryx: "Boidae", Epicrates: "Boidae", Candoia: "Boidae",
+	Agkistrodon: "Viperidae", Atheris: "Viperidae", Bitis: "Viperidae", Bothriechis: "Viperidae",
+	Bothrops: "Viperidae", Crotalus: "Viperidae", Lachesis: "Viperidae", Sistrurus: "Viperidae",
+	Trimeresurus: "Viperidae", Vipera: "Viperidae", Ahaetulla: "Colubridae", Boiga: "Colubridae",
+	Dipsas: "Colubridae", Elaphe: "Colubridae", Lampropeltis: "Colubridae", Pantherophis: "Colubridae",
+	Pituophis: "Colubridae", Rhinobothryum: "Colubridae", Spalerosophis: "Colubridae",
+	Amphiesma: "Natricidae", Natrix: "Natricidae", Nerodia: "Natricidae", Rhabdophis: "Natricidae",
+	Thamnophis: "Natricidae", Acutotyphlops: "Typhlopidae", Anilios: "Typhlopidae", Amerotyphlops: "Typhlopidae",
+	Rhinotyphlops: "Typhlopidae", Xenopeltis: "Xenopeltidae", Bolyeria: "Bolyeriidae", Casarea: "Bolyeriidae"
+};
+
+function normalizeText(value) {
+	return String(value || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+function clamp(value, min, max) {
+	return Math.min(Math.max(value, min), max);
+}
+
+function parseCsv(text) {
+	const rows = [];
+	let row = [], field = "", quoted = false;
+	for (let index = 0; index < text.length; index += 1) {
+		const character = text[index];
+		const next = text[index + 1];
+		if (character === '"' && quoted && next === '"') {
+			field += '"';
+			index += 1;
+		} else if (character === '"') {
+			quoted = !quoted;
+		} else if (character === "," && !quoted) {
+			row.push(field);
+			field = "";
+		} else if ((character === "\n" || character === "\r") && !quoted) {
+			if (character === "\r" && next === "\n") index += 1;
+			row.push(field);
+			if (row.length === 3 && row[0] !== "species") rows.push({ species: row[0], url: row[2] });
+			row = [];
+			field = "";
+		} else {
+			field += character;
+		}
+	}
+	return rows;
+}
+
+async function lookupCommonName(record) {
+	const key = record.species;
+	if (commonNameLookup.has(key)) return commonNameLookup.get(key);
+	try {
+		const response = await fetch(`https://api.inaturalist.org/v1/taxa?q=${encodeURIComponent(record.species)}&rank=species&per_page=1`);
+		if (!response.ok) throw new Error("Lookup failed");
+		const data = await response.json();
+		const value = data.results?.[0]?.preferred_common_name || "";
+		commonNameLookup.set(key, value);
+		return value;
+	} catch {
+		commonNameLookup.set(key, "");
+		return "";
+	}
+}
+
+const galaxySearchInput = document.querySelector("#galaxy-search");
+const galaxySearchButton = document.querySelector("#galaxy-search-btn");
+const galaxyResetButton = document.querySelector("#galaxy-reset-view");
+const galaxyZoomInButton = document.querySelector("#galaxy-zoom-in");
+const galaxyZoomOutButton = document.querySelector("#galaxy-zoom-out");
+const galaxyViewport = document.querySelector("#galaxy-viewport");
+const galaxySvg = document.querySelector("#galaxy-svg");
+const galaxyTransform = document.querySelector("#galaxy-transform");
+const galaxyLinksLayer = document.querySelector("#galaxy-links");
+const galaxyNodesLayer = document.querySelector("#galaxy-nodes");
+const galaxyFamilyPill = document.querySelector("#galaxy-family-pill");
+const galaxyGenusPill = document.querySelector("#galaxy-genus-pill");
+const galaxySpeciesName = document.querySelector("#galaxy-species-name");
+const galaxyCommonName = document.querySelector("#galaxy-common-name");
+const galaxyImageWrap = document.querySelector("#galaxy-image-wrap");
+const galaxyImage = document.querySelector("#galaxy-species-image");
+const galaxyImageCredit = document.querySelector("#galaxy-image-credit");
+const galaxyFamilyMeta = document.querySelector("#galaxy-family-meta");
+const galaxyGenusMeta = document.querySelector("#galaxy-genus-meta");
+const galaxyScientificMeta = document.querySelector("#galaxy-scientific-meta");
+const galaxyLink = document.querySelector("#galaxy-link");
+const galaxyEmpty = document.querySelector("#galaxy-empty");
+const galaxyCard = document.querySelector("#galaxy-card");
+
+const galaxyState = {
+	zoom: 1,
+	x: 0,
+	y: 0,
+	min: 0.55,
+	max: 1.8,
+	selectedFamily: null,
+	selectedGenus: null,
+	selectedSpecies: null,
+	genusPositions: new Map(),
+}
+
+function applyGalaxyTransform() {
+	galaxyTransform.setAttribute("transform", `translate(${galaxyState.x} ${galaxyState.y}) scale(${galaxyState.zoom})`);
+}
+
+function resetGalaxyView() {
+	galaxyState.zoom = 1;
+	galaxyState.x = 0;
+	galaxyState.y = 0;
+	applyGalaxyTransform();
+}
+
+function zoomGalaxy(delta) {
+	const nextZoom = clamp(galaxyState.zoom + delta, galaxyState.min, galaxyState.max);
+	const rect = galaxyViewport.getBoundingClientRect();
+	const centerX = rect.width / 2;
+	const centerY = rect.height / 2;
+	const ratio = nextZoom / galaxyState.zoom;
+	galaxyState.x = (galaxyState.x - centerX) * ratio + centerX;
+	galaxyState.y = (galaxyState.y - centerY) * ratio + centerY;
+	galaxyState.zoom = nextZoom;
+	applyGalaxyTransform();
+}
+
+let galaxyDrag = null;
+
+galaxyViewport.addEventListener("pointerdown", (event) => {
+	if (event.target.closest(".galaxy-node-group")) return;
+	galaxyDrag = {
+		pointerId: event.pointerId,
+		startX: event.clientX,
+		startY: event.clientY,
+		originX: galaxyState.x,
+		originY: galaxyState.y,
+	};
+	galaxyViewport.setPointerCapture(event.pointerId);
+});
+
+galaxyViewport.addEventListener("pointermove", (event) => {
+	if (!galaxyDrag || galaxyDrag.pointerId !== event.pointerId) return;
+	galaxyState.x = galaxyDrag.originX + (event.clientX - galaxyDrag.startX);
+	galaxyState.y = galaxyDrag.originY + (event.clientY - galaxyDrag.startY);
+	applyGalaxyTransform();
+});
+
+galaxyViewport.addEventListener("pointerup", (event) => {
+	if (galaxyDrag && galaxyDrag.pointerId === event.pointerId) galaxyDrag = null;
+});
+
+galaxyViewport.addEventListener("pointerleave", () => {
+	galaxyDrag = null;
+});
+
+galaxyViewport.addEventListener("wheel", (event) => {
+	event.preventDefault();
+	zoomGalaxy(event.deltaY < 0 ? 0.12 : -0.12);
+}, { passive: false });
+
+galaxyResetButton.addEventListener("click", resetGalaxyView);
+galaxyZoomInButton.addEventListener("click", () => zoomGalaxy(0.2));
+galaxyZoomOutButton.addEventListener("click", () => zoomGalaxy(-0.2));
+
+galaxySearchButton.addEventListener("click", () => {
+	const query = normalizeText(galaxySearchInput.value.trim());
+	if (!query) return;
+	const matches = [];
+	for (const record of snakeRecords) {
+		const [genus] = record.species.split(/\s+/, 2);
+		const family = familyByGenus[genus] || "Family not available in source";
+		const searchText = [family, genus, record.species].map(normalizeText).join(" ");
+		if (searchText.includes(query)) matches.push({ record, family, genus });
+	}
+	if (!matches.length) return;
+	const chosen = matches[0];
+	selectGalaxyNode(chosen.family, chosen.genus, chosen.record.species, chosen.record);
+});
+
+galaxySearchInput.addEventListener("keydown", (event) => {
+	if (event.key === "Enter") galaxySearchButton.click();
+});
+
+function setGalaxySelectionState(family, genus, species) {
+	galaxyState.selectedFamily = family || null;
+	galaxyState.selectedGenus = genus || null;
+	galaxyState.selectedSpecies = species || null;
+}
+
+function buildGalaxyGraph() {
+	const families = new Map();
+	for (const record of snakeRecords) {
+		const [genus, species] = record.species.split(/\s+/, 2);
+		const family = familyByGenus[genus] || "Family not available in source";
+		if (!families.has(family)) families.set(family, new Map());
+		const genera = families.get(family);
+		if (!genera.has(genus)) genera.set(genus, []);
+		genera.get(genus).push(record);
+	}
+
+	const familyNames = [...families.keys()].sort((a, b) => a.localeCompare(b));
+	const center = { x: 500, y: 350 };
+	const familyRadius = 185;
+
+	galaxyLinksLayer.innerHTML = "";
+	galaxyNodesLayer.innerHTML = "";
+	galaxyState.genusPositions.clear();
+
+	const rootNode = document.createElementNS("http://www.w3.org/2000/svg", "g");
+	rootNode.setAttribute("class", "galaxy-node-group");
+	rootNode.setAttribute("data-type", "root");
+	rootNode.setAttribute("data-selected", "true");
+	rootNode.setAttribute("transform", `translate(${center.x} ${center.y})`);
+	const rootCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+	rootCircle.setAttribute("class", "galaxy-node-core");
+	rootCircle.setAttribute("r", "42");
+	rootCircle.setAttribute("cx", "0");
+	rootCircle.setAttribute("cy", "0");
+	rootNode.appendChild(rootCircle);
+	const rootText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+	rootText.setAttribute("class", "galaxy-node-label");
+	rootText.setAttribute("x", "0");
+	rootText.setAttribute("y", "4");
+	rootText.textContent = "Snakes";
+	rootNode.appendChild(rootText);
+	rootNode.addEventListener("click", () => {
+		setGalaxySelectionState(null, null, null);
+		buildGalaxyGraph();
+		galaxyEmpty.hidden = false;
+		galaxyCard.hidden = true;
+	});
+	galaxyNodesLayer.appendChild(rootNode);
+
+	familyNames.forEach((family, index) => {
+		const angle = (Math.PI * 2 * index) / familyNames.length - Math.PI / 2;
+		const familyX = center.x + Math.cos(angle) * familyRadius;
+		const familyY = center.y + Math.sin(angle) * familyRadius;
+		const familyNode = document.createElementNS("http://www.w3.org/2000/svg", "g");
+		familyNode.setAttribute("class", "galaxy-node-group");
+		familyNode.setAttribute("data-type", "family");
+		familyNode.setAttribute("transform", `translate(${familyX} ${familyY})`);
+		familyNode.setAttribute("data-family", family);
+		const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
+		line.setAttribute("class", "galaxy-link");
+		line.dataset.family = family;
+		line.setAttribute("d", `M ${center.x} ${center.y} L ${familyX} ${familyY}`);
+		galaxyLinksLayer.appendChild(line);
+		const familyCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+		familyCircle.setAttribute("class", "galaxy-node-core");
+		familyCircle.setAttribute("r", "23");
+		familyCircle.setAttribute("cx", "0");
+		familyCircle.setAttribute("cy", "0");
+		familyNode.appendChild(familyCircle);
+		const familyText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+		familyText.setAttribute("class", "galaxy-node-label");
+		familyText.setAttribute("x", "0");
+		familyText.setAttribute("y", "4");
+		familyText.textContent = family;
+		familyNode.appendChild(familyText);
+		familyNode.addEventListener("click", () => {
+			setGalaxySelectionState(family, null, null);
+			buildGalaxyGraph();
+			galaxyEmpty.hidden = false;
+			galaxyCard.hidden = true;
+		});
+		galaxyNodesLayer.appendChild(familyNode);
+
+		const genera = [...families.get(family).keys()]
+			.sort((left, right) => families.get(family).get(right).length - families.get(family).get(left).length)
+			.slice(0, 4);
+		if (!galaxyState.selectedFamily || galaxyState.selectedFamily !== family) return;
+		genera.forEach((genus, genusIndex) => {
+			const genusOffset = (Math.PI * 2 * genusIndex) / Math.max(genera.length, 1) - Math.PI / 2;
+			const genusX = familyX + Math.cos(genusOffset) * 90;
+			const genusY = familyY + Math.sin(genusOffset) * 90;
+			galaxyState.genusPositions.set(`${family}::${genus}`, { x: genusX, y: genusY });
+			const genusNode = document.createElementNS("http://www.w3.org/2000/svg", "g");
+			genusNode.setAttribute("class", "galaxy-node-group");
+			genusNode.setAttribute("data-type", "genus");
+			genusNode.setAttribute("transform", `translate(${genusX} ${genusY})`);
+			genusNode.setAttribute("data-family", family);
+			genusNode.setAttribute("data-genus", genus);
+			const genusLine = document.createElementNS("http://www.w3.org/2000/svg", "path");
+			genusLine.setAttribute("class", "galaxy-link");
+			genusLine.dataset.family = family;
+			genusLine.dataset.genus = genus;
+			genusLine.setAttribute("d", `M ${familyX} ${familyY} L ${genusX} ${genusY}`);
+			galaxyLinksLayer.appendChild(genusLine);
+			const genusCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+			genusCircle.setAttribute("class", "galaxy-node-core");
+			genusCircle.setAttribute("r", "14");
+			genusCircle.setAttribute("cx", "0");
+			genusCircle.setAttribute("cy", "0");
+			genusNode.appendChild(genusCircle);
+			const genusText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+			genusText.setAttribute("class", "galaxy-node-label");
+			genusText.setAttribute("x", "0");
+			genusText.setAttribute("y", "3");
+			genusText.textContent = genus;
+			genusNode.appendChild(genusText);
+			genusNode.addEventListener("click", () => {
+				const sample = families.get(family).get(genus)[0];
+				selectGalaxyNode(family, genus, sample.species, sample, false);
+			});
+			galaxyNodesLayer.appendChild(genusNode);
+
+		});
+	});
+
+	updateGalaxyEmphasis();
+}
+
+function renderGalaxySpecies(family, genus, selectedSpecies) {
+	document.querySelectorAll('.galaxy-node-group[data-type="species"], .galaxy-link[data-type="species"]').forEach((node) => node.remove());
+	const position = galaxyState.genusPositions.get(`${family}::${genus}`);
+	const records = snakeRecords
+		.filter((record) => record.species.split(/\s+/, 1)[0] === genus)
+		.sort((left, right) => left.species.localeCompare(right.species));
+	const selectedRecord = records.find((record) => record.species === selectedSpecies);
+	const visibleRecords = records.filter((record) => record !== selectedRecord).slice(0, 11);
+	if (selectedRecord) visibleRecords.unshift(selectedRecord);
+	if (!position) return;
+
+	visibleRecords.forEach((record, index) => {
+		const angle = (Math.PI * 2 * index) / Math.max(visibleRecords.length, 1) - Math.PI / 2;
+		const speciesX = position.x + Math.cos(angle) * 76;
+		const speciesY = position.y + Math.sin(angle) * 76;
+		const speciesNode = document.createElementNS("http://www.w3.org/2000/svg", "g");
+		speciesNode.setAttribute("class", "galaxy-node-group");
+		speciesNode.setAttribute("data-type", "species");
+		speciesNode.setAttribute("transform", `translate(${speciesX} ${speciesY})`);
+		speciesNode.dataset.family = family;
+		speciesNode.dataset.genus = genus;
+		speciesNode.dataset.species = record.species;
+		const speciesLine = document.createElementNS("http://www.w3.org/2000/svg", "path");
+		speciesLine.setAttribute("class", "galaxy-link");
+		speciesLine.dataset.type = "species";
+		speciesLine.dataset.family = family;
+		speciesLine.dataset.genus = genus;
+		speciesLine.dataset.species = record.species;
+		speciesLine.setAttribute("d", `M ${position.x} ${position.y} L ${speciesX} ${speciesY}`);
+		galaxyLinksLayer.appendChild(speciesLine);
+		const speciesCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+		speciesCircle.setAttribute("class", "galaxy-node-core");
+		speciesCircle.setAttribute("r", "7");
+		speciesNode.appendChild(speciesCircle);
+		const speciesText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+		speciesText.setAttribute("class", "galaxy-node-label");
+		speciesText.setAttribute("x", "0");
+		speciesText.setAttribute("y", "3");
+		speciesText.textContent = record.species;
+		speciesNode.appendChild(speciesText);
+		speciesNode.addEventListener("click", () => selectGalaxyNode(family, genus, record.species, record));
+		galaxyNodesLayer.appendChild(speciesNode);
+	});
+}
+
+function updateGalaxyEmphasis() {
+	const allGroups = [...document.querySelectorAll(".galaxy-node-group")];
+	const allLinks = [...document.querySelectorAll(".galaxy-link")];
+	galaxyViewport.classList.toggle("has-selection", Boolean(galaxyState.selectedSpecies));
+
+	allGroups.forEach((group) => {
+		const family = group.dataset.family;
+		const genus = group.dataset.genus;
+		const species = group.dataset.species;
+		const isRoot = group.dataset.type === "root";
+		const matchesFamily = galaxyState.selectedFamily && family === galaxyState.selectedFamily;
+		const matchesGenus = galaxyState.selectedGenus && genus === galaxyState.selectedGenus;
+		const matchesSpecies = galaxyState.selectedSpecies && species === galaxyState.selectedSpecies;
+		const isRelated = isRoot || matchesFamily || matchesGenus || matchesSpecies || !galaxyState.selectedFamily;
+		const isCurrentSpecies = matchesSpecies;
+		group.classList.toggle("is-muted", !isRelated && !isRoot);
+		group.classList.toggle("is-emphasized", matchesFamily || matchesGenus || matchesSpecies || isRoot);
+		group.classList.toggle("is-current", isCurrentSpecies);
+		group.setAttribute("data-selected", String(matchesFamily || matchesGenus || matchesSpecies || isRoot));
+	});
+
+	allLinks.forEach((link) => {
+		const shouldHighlight = Boolean(galaxyState.selectedFamily)
+			&& (link.dataset.family === galaxyState.selectedFamily
+			|| link.dataset.genus === galaxyState.selectedGenus
+			|| link.dataset.species === galaxyState.selectedSpecies);
+		link.classList.toggle("is-muted", !shouldHighlight && galaxyState.selectedFamily);
+		link.classList.toggle("is-emphasized", shouldHighlight);
+	});
+}
+
+async function loadGalaxySpeciesImage(record, family, genus) {
+	const cleanName = record.species;
+	try {
+		const response = await fetch(`https://api.inaturalist.org/v1/taxa?q=${encodeURIComponent(cleanName)}&rank=species&per_page=1`);
+		if (!response.ok) throw new Error("Image not found");
+		const data = await response.json();
+		const photo = data.results?.[0]?.default_photo;
+		if (!photo?.medium_url) throw new Error("Image missing");
+		galaxyImage.src = photo.medium_url;
+		galaxyImage.alt = `iNaturalist image of ${cleanName}`;
+		galaxyImageCredit.textContent = photo.attribution || "Image from iNaturalist";
+		galaxyImageWrap.hidden = false;
+	} catch {
+		galaxyImageWrap.hidden = true;
+		galaxyImageCredit.textContent = "";
+	}
+}
+
+function selectGalaxyNode(family, genus, speciesName, record, focusSpecies = true, revealFamily = false) {
+	setGalaxySelectionState(family, genus, focusSpecies ? speciesName : null);
+	if (revealFamily || !galaxyState.genusPositions.has(`${family}::${genus}`)) buildGalaxyGraph();
+	const visibleSpeciesNode = [...document.querySelectorAll('.galaxy-node-group[data-type="species"]')]
+		.find((node) => node.dataset.species === speciesName);
+	if (!focusSpecies || !visibleSpeciesNode) {
+		renderGalaxySpecies(family, genus, focusSpecies ? speciesName : null);
+	}
+	updateGalaxyEmphasis();
+	galaxyEmpty.hidden = true;
+	galaxyCard.hidden = false;
+	galaxyFamilyPill.textContent = family;
+	galaxyGenusPill.textContent = genus;
+	const [genusName, speciesPart] = speciesName.split(/\s+/, 2);
+	galaxySpeciesName.textContent = speciesName;
+	galaxyFamilyMeta.textContent = family;
+	galaxyGenusMeta.textContent = genus;
+	galaxyScientificMeta.textContent = speciesName;
+	galaxyCommonName.textContent = "Loading common name...";
+	galaxyLink.href = record.url;
+	loadGalaxySpeciesImage(record, family, genus).then(async () => {
+		const common = await lookupCommonName(record);
+		galaxyCommonName.textContent = common ? `Common name: ${common}` : "Common name: not available";
+	});
+}
+
+fetch("data/snakes-search-results.csv")
+	.then((response) => response.text())
+	.then((text) => {
+		snakeRecords = parseCsv(text);
+		buildGalaxyGraph();
+		applyGalaxyTransform();
+	})
+	.catch(() => {
+		galaxyEmpty.innerHTML = "<p>The taxonomy galaxy could not be loaded from the source dataset.</p>";
+	});
+</script>
