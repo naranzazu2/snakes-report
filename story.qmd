@@ -1,0 +1,184 @@
+---
+title: "Follow This Snake"
+---
+
+<section class="story-section" aria-labelledby="story-title">
+<div class="story-kicker">A fixed story from the snake dataset</div>
+<div class="story-scene story-scene-opening story-opening">
+<div class="story-opening-image-wrap"><img id="story-hero-image" class="story-hero-image" alt="" /></div>
+<div class="story-opening-copy">
+<h2 id="story-title">Follow This Snake</h2>
+<p class="story-deck">How one species fits into the larger snake family tree.</p>
+</div>
+</div>
+<div class="story-scene story-scene-taxonomy">
+<div class="story-journey-heading"><p class="story-label">Scene 2 · Follow the branch</p><p>Each step narrows the view, from all snakes to one individual.</p></div>
+<div class="story-journey">
+<article class="story-step"><span class="story-step-number">01</span><h3>Snake</h3><p>Serpentes is the broad group containing every snake in this story.</p></article>
+<article class="story-step"><span class="story-step-number">02</span><h3 id="story-family-step">Family</h3><p>The larger branch containing related genera.</p></article>
+<article class="story-step"><span class="story-step-number">03</span><h3 id="story-genus-step">Genus</h3><p>A more specific group containing closely related species.</p></article>
+<article class="story-step"><span class="story-step-number">04</span><h3>Species</h3><p>The individual snake featured in this story.</p></article>
+</div>
+<nav class="story-path" aria-label="Taxonomy path">
+<span class="story-path-node story-path-root">Serpentes</span><span class="story-path-line"></span>
+<span id="story-family-path" class="story-path-node story-path-family">Elapidae</span><span class="story-path-line"></span>
+<span id="story-genus-path" class="story-path-node story-path-genus">Acanthophis</span><span class="story-path-line"></span>
+<span id="story-species-path" class="story-path-node story-path-species">A. antarcticus</span>
+</nav>
+</div>
+<div class="story-layout">
+<div class="story-copy">
+<p><em id="story-featured-copy">Acanthophis antarcticus</em> is a useful guide through this dataset because its genus is compact enough to see as a group, but varied enough to show how one branch opens outward.</p>
+<p>It belongs to <strong id="story-family-copy">Elapidae</strong> and sits within <strong id="story-genus-copy">Acanthophis</strong> beside several other recorded species. The connected cards below keep those relatives tied to the same branch.</p>
+<p id="story-count-copy">In this branch, the featured species is one of 8 records in its genus.</p>
+</div>
+<div class="story-facts" aria-label="Featured species facts">
+<div><span>Genus records</span><strong id="story-genus-count">8</strong></div>
+<div><span>Family records</span><strong id="story-family-count">—</strong></div>
+<div><span>Authority</span><strong id="story-authority">(SHAW, 1802)</strong></div>
+</div>
+</div>
+<div class="story-scene story-scene-relatives">
+<div class="relatives-heading"><p class="story-label">Scene 3 · Meet the relatives</p><h3>One branch, many forms</h3></div>
+<div class="story-relatives-stage">
+<div class="story-featured-anchor"><div class="story-featured-dot">Featured</div><strong><em id="story-featured-anchor-name">Acanthophis antarcticus</em></strong></div>
+<div id="story-relatives" class="story-relatives" aria-live="polite"></div>
+</div>
+</div>
+<div class="story-scene story-scene-pattern story-count-visual" aria-label="Family and genus record comparison">
+<div class="story-count-heading"><p class="story-label">Scene 4 · Find the pattern</p><p>Records in the selected branch</p></div>
+<div class="story-count-row"><span id="story-family-bar-label">Elapidae</span><div class="story-count-track"><div id="story-family-bar" class="story-count-bar story-family-bar"></div></div><strong id="story-family-bar-value">—</strong></div>
+<div class="story-count-row"><span id="story-genus-bar-label">Acanthophis</span><div class="story-count-track"><div id="story-genus-bar" class="story-count-bar story-genus-bar"></div></div><strong id="story-genus-bar-value">—</strong></div>
+<p id="story-insight-copy" class="story-pattern-copy">The genus is a compact branch in the dataset, with several species sharing the same taxonomic address while remaining distinct entries.</p>
+</div>
+<div class="story-scene story-scene-ending story-ending"><p class="story-label">Scene 5 · The bigger picture</p><div class="story-wide-branch" aria-label="Featured species within its wider taxonomy"><span>Serpentes</span><i></i><span id="story-wide-family">Elapidae</span><i></i><span id="story-wide-genus">Acanthophis</span><i></i><strong>A. antarcticus</strong></div><p>The featured snake is one small point in a much larger family. Following one branch makes snake diversity easier to see: a single species is also a doorway into a network.</p></div>
+</section>
+
+<script>
+let snakeRecords = [];
+
+const familyByGenus = {
+	Acanthophis: "Elapidae", Aipysurus: "Elapidae", Bungarus: "Elapidae", Dendroaspis: "Elapidae",
+	Laticauda: "Elapidae", Micruroides: "Elapidae", Naja: "Elapidae", Oxyuranus: "Elapidae",
+	Pseudohaje: "Elapidae", Sinomicrurus: "Elapidae", Walterinnesia: "Elapidae",
+	Acrochordus: "Acrochordidae", Anilius: "Aniliidae", Antaresia: "Pythonidae", Apodora: "Pythonidae",
+	Aspidites: "Pythonidae", Bothrochilus: "Pythonidae", Liasis: "Pythonidae", Morelia: "Pythonidae",
+	Python: "Pythonidae", Simalia: "Pythonidae", Boa: "Boidae", Corallus: "Boidae",
+	Eunectes: "Boidae", Eryx: "Boidae", Epicrates: "Boidae", Candoia: "Boidae",
+	Agkistrodon: "Viperidae", Atheris: "Viperidae", Bitis: "Viperidae", Bothriechis: "Viperidae",
+	Bothrops: "Viperidae", Crotalus: "Viperidae", Lachesis: "Viperidae", Sistrurus: "Viperidae",
+	Trimeresurus: "Viperidae", Vipera: "Viperidae", Ahaetulla: "Colubridae", Boiga: "Colubridae",
+	Dipsas: "Colubridae", Elaphe: "Colubridae", Lampropeltis: "Colubridae", Pantherophis: "Colubridae",
+	Pituophis: "Colubridae", Rhinobothryum: "Colubridae", Spalerosophis: "Colubridae",
+	Amphiesma: "Natricidae", Natrix: "Natricidae", Nerodia: "Natricidae", Rhabdophis: "Natricidae",
+	Thamnophis: "Natricidae", Acutotyphlops: "Typhlopidae", Anilios: "Typhlopidae", Amerotyphlops: "Typhlopidae",
+	Rhinotyphlops: "Typhlopidae", Xenopeltis: "Xenopeltidae", Bolyeria: "Bolyeriidae", Casarea: "Bolyeriidae"
+};
+
+function parseCsv(text) {
+	const rows = [];
+	let row = [], field = "", quoted = false;
+	for (let index = 0; index < text.length; index += 1) {
+		const character = text[index];
+		const next = text[index + 1];
+		if (character === '"' && quoted && next === '"') {
+			field += '"';
+			index += 1;
+		} else if (character === '"') {
+			quoted = !quoted;
+		} else if (character === "," && !quoted) {
+			row.push(field);
+			field = "";
+		} else if ((character === "\n" || character === "\r") && !quoted) {
+			if (character === "\r" && next === "\n") index += 1;
+			row.push(field);
+			if (row.length === 3 && row[0] !== "species") rows.push({ species: row[0], authority: row[1], url: row[2] });
+			row = [];
+			field = "";
+		} else {
+			field += character;
+		}
+	}
+	return rows;
+}
+
+function storyImageUrl(record) {
+	return fetch(`https://api.inaturalist.org/v1/taxa?q=${encodeURIComponent(record.species)}&rank=species&per_page=1`)
+		.then((response) => response.ok ? response.json() : null)
+		.then((data) => ({
+			commonName: data?.results?.[0]?.preferred_common_name || "Common name unavailable",
+			image: data?.results?.[0]?.default_photo?.medium_url || "",
+		}))
+		.catch(() => ({ commonName: "Common name unavailable", image: "" }));
+}
+
+async function buildStory() {
+	const featured = snakeRecords.find((record) => record.species === "Acanthophis antarcticus");
+	if (!featured) return;
+	const genus = featured.species.split(/\s+/, 1)[0];
+	const family = familyByGenus[genus] || "Family not available";
+	const genusRecords = snakeRecords.filter((record) => record.species.split(/\s+/, 1)[0] === genus);
+	const familyRecords = snakeRecords.filter((record) => familyByGenus[record.species.split(/\s+/, 1)[0]] === family);
+	const featuredInfo = await storyImageUrl(featured);
+	const heroImage = document.querySelector("#story-hero-image");
+	if (featuredInfo.image) heroImage.src = featuredInfo.image;
+	heroImage.alt = `Image of ${featured.species}`;
+	document.querySelector("#story-family-count").textContent = familyRecords.length.toLocaleString();
+	document.querySelector("#story-genus-count").textContent = genusRecords.length;
+	document.querySelector("#story-authority").textContent = featured.authority;
+	document.querySelector("#story-family-path").textContent = family;
+	document.querySelector("#story-family-copy").textContent = family;
+	document.querySelector("#story-family-step").textContent = family;
+	document.querySelector("#story-genus-copy").textContent = genus;
+	document.querySelector("#story-genus-step").textContent = genus;
+	document.querySelector("#story-species-path").textContent = featured.species;
+	document.querySelector("#story-featured-copy").textContent = featured.species;
+	document.querySelector("#story-featured-anchor-name").textContent = featured.species;
+	document.querySelector("#story-count-copy").textContent = `In this branch, the featured species is one of ${genusRecords.length} records in its genus. The ${genusRecords.length - 1} relatives below are drawn directly from the existing source dataset.`;
+	document.querySelector("#story-insight-copy").textContent = `${genus} contains ${genusRecords.length} records in this dataset. That means one taxonomic address can hold ${genusRecords.length - 1} relatives alongside the featured species, all connected by genus before their individual stories begin.`;
+	document.querySelector("#story-family-bar-label").textContent = family;
+	document.querySelector("#story-genus-bar-label").textContent = genus;
+	document.querySelector("#story-family-bar-value").textContent = familyRecords.length.toLocaleString();
+	document.querySelector("#story-genus-bar-value").textContent = genusRecords.length;
+	document.querySelector("#story-family-bar").style.width = "100%";
+	document.querySelector("#story-genus-bar").style.width = `${Math.max(8, (genusRecords.length / familyRecords.length) * 100)}%`;
+
+	const relatives = genusRecords.filter((record) => record.species !== featured.species);
+	const relativeCards = await Promise.all(relatives.map(async (record, index) => {
+		const info = await storyImageUrl(record);
+		return `<article class="relative-card" style="--relative-delay: ${index * 90}ms"><div class="relative-image-wrap">${info.image ? `<img src="${info.image}" alt="Image of ${record.species}" />` : "<div class=\"relative-image-missing\">Image unavailable</div>"}</div><div class="relative-copy"><p class="relative-common">${info.commonName}</p><h4>${record.species}</h4><p class="relative-authority">${record.authority}</p></div></article>`;
+	}));
+	const relativesContainer = document.querySelector("#story-relatives");
+	relativesContainer.classList.remove("is-loaded");
+	relativesContainer.innerHTML = relativeCards.join("");
+	requestAnimationFrame(() => relativesContainer.classList.add("is-loaded"));
+}
+
+if ("IntersectionObserver" in window) {
+	const storyStepObserver = new IntersectionObserver((entries) => {
+		entries.forEach((entry) => {
+			if (entry.isIntersecting) {
+				entry.target.classList.add("is-visible");
+				storyStepObserver.unobserve(entry.target);
+			}
+		});
+	}, { threshold: 0.25 });
+	document.querySelectorAll(".story-step").forEach((step) => storyStepObserver.observe(step));
+	const storySceneObserver = new IntersectionObserver((entries) => {
+		entries.forEach((entry) => {
+			if (entry.isIntersecting) entry.target.classList.add("is-active");
+		});
+	}, { threshold: 0.18 });
+	document.querySelectorAll(".story-scene").forEach((scene) => storySceneObserver.observe(scene));
+} else {
+	document.querySelectorAll(".story-step").forEach((step) => step.classList.add("is-visible"));
+	document.querySelectorAll(".story-scene").forEach((scene) => scene.classList.add("is-active"));
+}
+
+fetch("data/snakes-search-results.csv")
+	.then((response) => response.text())
+	.then((text) => {
+		snakeRecords = parseCsv(text);
+		buildStory();
+	});
+</script>

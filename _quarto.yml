@@ -11,7 +11,7 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: index.qmd#story-title
+      - href: story.qmd
         text: Story
       - href: about.qmd
         text: About
