@@ -2,10 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://naranzazu2.github.io/snakes-report/index.html</loc>
-    <lastmod>2026-09-20T05:02:20.873Z</lastmod>
+    <lastmod>2026-09-20T20:12:44.468Z</lastmod>
   </url>
   <url>
     <loc>https://naranzazu2.github.io/snakes-report/about.html</loc>
     <lastmod>2026-09-20T04:56:25.471Z</lastmod>
+  </url>
+  <url>
+    <loc>https://naranzazu2.github.io/snakes-report/story.html</loc>
+    <lastmod>2026-09-20T20:14:25.788Z</lastmod>
   </url>
 </urlset>
