@@ -25,21 +25,21 @@
     "href": "about.html",
     "title": "About the Atlas",
     "section": "",
-    "text": "The atlas follows a simple path through the snake family tree: Serpentes → family → genus → species. Serpentes is the broad group containing snakes. A family gathers related genera, a genus gathers closely related species, and a species identifies one distinct snake.\nThe Snake Taxonomy Galaxy begins with Snakes at the center and reveals families, representative genera, and individual species as you select each branch. The Follow This Snake story uses one species as a guide, then expands outward to show its relatives in the same genus."
+    "text": "Nicolas Aranzazu\n\nEmail: n.aranzazu30@ncf.edu\nGitHub: github.com/naranzazu2\nFinal project: github.com/naranzazu2/snakes-report\nNew College of Florida"
   },
   {
-    "objectID": "about.html#reading-the-taxonomy",
-    "href": "about.html#reading-the-taxonomy",
+    "objectID": "about.html#contact",
+    "href": "about.html#contact",
     "title": "About the Atlas",
     "section": "",
-    "text": "The atlas follows a simple path through the snake family tree: Serpentes → family → genus → species. Serpentes is the broad group containing snakes. A family gathers related genera, a genus gathers closely related species, and a species identifies one distinct snake.\nThe Snake Taxonomy Galaxy begins with Snakes at the center and reveals families, representative genera, and individual species as you select each branch. The Follow This Snake story uses one species as a guide, then expands outward to show its relatives in the same genus."
+    "text": "Nicolas Aranzazu\n\nEmail: n.aranzazu30@ncf.edu\nGitHub: github.com/naranzazu2\nFinal project: github.com/naranzazu2/snakes-report\nNew College of Florida"
   },
   {
-    "objectID": "about.html#where-the-taxonomy-comes-from",
-    "href": "about.html#where-the-taxonomy-comes-from",
+    "objectID": "about.html#data-sources",
+    "href": "about.html#data-sources",
     "title": "About the Atlas",
-    "section": "Where the taxonomy comes from",
-    "text": "Where the taxonomy comes from\nThe visualizations use the project dataset in data/snakes-search-results.csv. Each record supplies a scientific species name, an authority, and a Reptile Database link. Family and genus relationships are derived from the scientific name and the site’s taxonomy mapping; species photographs and common names are retrieved from iNaturalist when available.\nBecause the dataset does not include measurements such as body length, weight, habitat, or geographic range, the supporting comparisons focus on what the data can document directly: the number of records in a family or genus and the relationships between their names.\n\nAbout this atlas\nThis page explains the taxonomy data and visualizations used throughout Snake Atlas."
+    "section": "Data sources",
+    "text": "Data sources\nSnake taxonomy and species records come from The Reptile Database, with geographic counts based on its worldwide diversity regions; species that occur in multiple regions may be counted more than once. Common names and photos are retrieved from iNaturalist when available. Snakebite estimates come from the WHO fact sheet and a 2017 study of the Americas; their regional measures use different definitions and are not directly comparable."
   },
   {
     "objectID": "first-aid.html",
