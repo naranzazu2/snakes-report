@@ -35,6 +35,20 @@
     "text": "Where the taxonomy comes from\nThe visualizations use the project dataset in data/snakes-search-results.csv. Each record supplies a scientific species name, an authority, and a Reptile Database link. Family and genus relationships are derived from the scientific name and the site’s taxonomy mapping; species photographs and common names are retrieved from iNaturalist when available.\nBecause the dataset does not include measurements such as body length, weight, habitat, or geographic range, the supporting comparisons focus on what the data can document directly: the number of records in a family or genus and the relationships between their names.\n\nAbout this atlas\nThis page explains the taxonomy data and visualizations used throughout Snake Atlas."
   },
   {
+    "objectID": "continent.html",
+    "href": "continent.html",
+    "title": "Snake Species by Continent",
+    "section": "",
+    "text": "Africa Asia Europe North America South America Oceania\n\n\n\n\n\n\nImportant: The Reptile Database regions are geographic distribution regions. A single snake species can occur in more than one region, so the region totals should not be summed to obtain the global number of snake species.\n\n\nSource: The Reptile Database, Worldwide Diversity of Reptiles. This chart uses the database’s geographic distribution regions and the accepted snake taxon in the Reptile Database advanced search for Serpentes.\nMethodology: Counts represent the number of snake species recorded in each geographic distribution region. Because species can be assigned to more than one region, these values are region-level counts rather than unique global totals."
+  },
+  {
+    "objectID": "venom.html",
+    "href": "venom.html",
+    "title": "Venom and Antivenom Guide",
+    "section": "",
+    "text": "Choose a snake to see a brief venom profile, possible effects on people, and antivenom products listed for that species.\n\n\nSnake species  Indian cobra · Naja naja Russell’s viper · Daboia russelii Saw-scaled viper · Echis carinatus Terciopelo · Bothrops asper Coastal taipan · Oxyuranus scutellatus \n\n\n\n\n\n\n\n\n\nVenom profile\n\n\n\n\n\n\nPossible effects on people\n\n\n\n\n\n\n\nAntivenom listed in Impact’s database\n\n\n\n\n\n\n\n\nA snakebite is a medical emergency. This page is for learning only: symptoms vary, and a database listing does not mean a product is approved or available where a bite occurs. Antivenom choice and treatment must be decided by medical professionals using local guidance.\n\n\n\nSources: SnakeDB toxicity by species; WHO snakebite envenoming fact sheet; Impact Global Health medicines database and its product profiles.\n\n\nSnakeDB marks the selected species as venomous; it does not classify their clinical venom effects. The effect summaries here describe possible syndromes, not what will happen in every bite."
+  },
+  {
     "objectID": "story.html",
     "href": "story.html",
     "title": "Follow This Snake",

@@ -118,6 +118,177 @@ h1 {
   padding: 1.5rem 2rem;
 }
 
+.continent-page {
+  margin: 2rem auto 3rem;
+  max-width: 1100px;
+  padding: 0 1rem;
+}
+
+.continent-chart-card {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(24, 59, 63, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(24, 59, 63, 0.08);
+  padding: 1rem;
+}
+
+.continent-map {
+  min-height: 560px;
+  width: 100%;
+}
+
+.continent-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.1rem;
+  padding: 0.4rem 0.75rem 0.8rem;
+}
+
+.continent-legend span {
+  align-items: center;
+  display: inline-flex;
+  font-size: 0.9rem;
+  font-weight: 600;
+  gap: 0.4rem;
+}
+
+.continent-legend i {
+  background: var(--swatch);
+  border-radius: 2px;
+  display: inline-block;
+  height: 0.8rem;
+  width: 0.8rem;
+}
+
+.continent-callout,
+.continent-source {
+  background: var(--mint);
+  border-left: 6px solid var(--coral);
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+}
+
+.continent-callout p,
+.continent-source p {
+  margin: 0;
+  line-height: 1.7;
+}
+
+.continent-source {
+  background: rgba(216, 235, 224, 0.6);
+}
+
+.map-error {
+  color: var(--ink);
+  font-weight: 600;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.venom-page {
+  margin: 2rem auto 3rem;
+  max-width: 960px;
+  padding: 0 1rem;
+}
+
+.venom-intro {
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1.65;
+  max-width: 68ch;
+}
+
+.venom-selector {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+.venom-selector label {
+  font-weight: 700;
+}
+
+.venom-selector select {
+  background: #fffaf0;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--ink);
+  font: inherit;
+  max-width: 100%;
+  min-height: 2.75rem;
+  padding: 0.55rem 2.5rem 0.55rem 0.75rem;
+}
+
+.venom-details {
+  border-top: 4px solid var(--coral);
+  padding: 1.25rem 0 0;
+}
+
+.venom-region {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+}
+
+.venom-details h2 {
+  font-size: 2rem;
+  margin: 0 0 1.25rem;
+}
+
+.venom-facts {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+}
+
+.venom-facts h3,
+.venom-product h3 {
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem;
+}
+
+.venom-facts p,
+.venom-product p,
+.venom-sources p {
+  line-height: 1.7;
+  margin: 0;
+}
+
+.venom-product {
+  background: rgba(216, 235, 224, 0.6);
+  border-left: 5px solid #62a98b;
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+}
+
+.venom-product-scope {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-top: 0.35rem !important;
+}
+
+.venom-caution {
+  background: #fff0e8;
+  border-left: 5px solid var(--coral);
+  line-height: 1.65;
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+}
+
+.venom-sources {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 1.5rem;
+}
+
+.venom-sources p + p {
+  margin-top: 0.5rem;
+}
+
 .snake-explorer {
   background: #f1e7d4;
   margin: 2rem auto;
@@ -214,6 +385,16 @@ h1 {
 @media (min-width: 820px) {
   .taxonomy-layout {
     grid-template-columns: 1.15fr 0.85fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .continent-map {
+    min-height: 420px;
+  }
+
+  .continent-chart-card {
+    padding: 0.5rem;
   }
 }
 
