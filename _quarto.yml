@@ -2,6 +2,8 @@ project:
   type: website
   resources:
     - data/snakes-search-results.csv
+    - data/snake_species_by_region.csv
+    - data/snakebite_regional_estimates.csv
 
 website:
   title: "Snake Atlas"
@@ -13,6 +15,16 @@ website:
         text: Home
       - href: story.qmd
         text: Story
+      - href: continent.qmd
+        text: Snake Species by Continent
+      - href: venom.qmd
+        text: Venom
+      - href: snakebites.qmd
+        text: Snakebites
+      - href: first-aid.qmd
+        text: First Aid
+      - href: myths.qmd
+        text: Myths vs Facts
       - href: about.qmd
         text: About
 

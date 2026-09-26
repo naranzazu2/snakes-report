@@ -1,0 +1,176 @@
+---
+title: "Snake Species by Continent"
+---
+
+::: {.continent-page}
+::: {.continent-chart-card}
+<div class="continent-legend" aria-label="Continent map key">
+  <span><i style="--swatch: #e8765f"></i>Africa</span>
+  <span><i style="--swatch: #e8bd55"></i>Asia</span>
+  <span><i style="--swatch: #62a98b"></i>Europe</span>
+  <span><i style="--swatch: #5793b5"></i>North America</span>
+  <span><i style="--swatch: #b381aa"></i>South America</span>
+  <span><i style="--swatch: #88a94e"></i>Oceania</span>
+</div>
+<div id="snake-region-map" class="continent-map" aria-label="Snake species by geographic region map"></div>
+:::
+
+::: {.continent-callout}
+**Important:** The Reptile Database regions are geographic distribution regions. A single snake species can occur in more than one region, so the region totals should not be summed to obtain the global number of snake species.
+:::
+
+::: {.continent-source}
+**Source:** The Reptile Database, [Worldwide Diversity of Reptiles](https://www.reptile-database.org/db-info/diversity.html). This chart uses the database’s geographic distribution regions and the accepted snake taxon in the Reptile Database advanced search for Serpentes.
+
+**Methodology:** Counts represent the number of snake species recorded in each geographic distribution region. Because species can be assigned to more than one region, these values are region-level counts rather than unique global totals.
+:::
+:::
+
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<script>
+  const regionPoints = {
+    "Africa": { lat: 3, lon: 20 },
+    "Near East": { lat: 32, lon: 44 },
+    "Asia": { lat: 35, lon: 95 },
+    "Europe": { lat: 52, lon: 15 },
+    "Australia": { lat: -25, lon: 133 },
+    "North America": { lat: 42, lon: -100 },
+    "Central America": { lat: 16, lon: -90 },
+    "South America": { lat: -15, lon: -60 },
+    "Caribbean": { lat: 20, lon: -75 },
+    "Indian Ocean": { lat: -15, lon: 50 },
+    "Oceania": { lat: -12, lon: 170 }
+  };
+
+  const continents = {
+    "Africa": {
+      color: "#e8765f",
+      countries: ["DZA", "AGO", "BEN", "BWA", "BFA", "BDI", "CPV", "CMR", "CAF", "TCD", "COM", "COG", "COD", "CIV", "DJI", "EGY", "GNQ", "ERI", "SWZ", "ETH", "GAB", "GMB", "GHA", "GIN", "GNB", "KEN", "LSO", "LBR", "LBY", "MDG", "MWI", "MLI", "MRT", "MUS", "MAR", "MOZ", "NAM", "NER", "NGA", "RWA", "STP", "SEN", "SYC", "SLE", "SOM", "ZAF", "SSD", "SDN", "TZA", "TGO", "TUN", "UGA", "ZMB", "ZWE"]
+    },
+    "Asia": {
+      color: "#e8bd55",
+      countries: ["AFG", "ARM", "AZE", "BHR", "BGD", "BTN", "BRN", "KHM", "CHN", "CYP", "GEO", "IND", "IDN", "IRN", "IRQ", "ISR", "JPN", "JOR", "KAZ", "KWT", "KGZ", "LAO", "LBN", "MYS", "MDV", "MNG", "MMR", "NPL", "PRK", "OMN", "PAK", "PSE", "PHL", "QAT", "SAU", "SGP", "KOR", "LKA", "SYR", "TWN", "TJK", "THA", "TLS", "TUR", "TKM", "ARE", "UZB", "VNM", "YEM"]
+    },
+    "Europe": {
+      color: "#62a98b",
+      countries: ["ALB", "AND", "AUT", "BLR", "BEL", "BIH", "BGR", "HRV", "CZE", "DNK", "EST", "FIN", "FRA", "DEU", "GRC", "HUN", "ISL", "IRL", "ITA", "LVA", "LIE", "LTU", "LUX", "MLT", "MDA", "MCO", "MNE", "NLD", "MKD", "NOR", "POL", "PRT", "ROU", "RUS", "SMR", "SRB", "SVK", "SVN", "ESP", "SWE", "CHE", "UKR", "GBR", "VAT"]
+    },
+    "North America": {
+      color: "#5793b5",
+      countries: ["ATG", "BHS", "BRB", "BLZ", "CAN", "CRI", "CUB", "DMA", "DOM", "SLV", "GRD", "GTM", "HTI", "HND", "JAM", "MEX", "NIC", "PAN", "KNA", "LCA", "VCT", "TTO", "USA", "GRL"]
+    },
+    "South America": {
+      color: "#b381aa",
+      countries: ["ARG", "BOL", "BRA", "CHL", "COL", "ECU", "GUY", "PRY", "PER", "SUR", "URY", "VEN"]
+    },
+    "Oceania": {
+      color: "#88a94e",
+      countries: ["AUS", "FJI", "KIR", "MHL", "FSM", "NRU", "NZL", "PLW", "PNG", "WSM", "SLB", "TON", "TUV", "VUT"]
+    }
+  };
+
+  fetch("./data/snake_species_by_region.csv")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("CSV not found");
+      }
+      return response.text();
+    })
+    .then((text) => {
+      const rows = text.trim().split(/\n/).slice(1);
+      const data = rows
+        .map((line) => {
+          const [region, countText] = line.split(",");
+          const count = Number(countText);
+          if (!region || Number.isNaN(count)) return null;
+          return {
+            region: region.trim(),
+            count: count,
+            ...regionPoints[region]
+          };
+        })
+        .filter(Boolean);
+
+      const counts = data.map((d) => d.count);
+      const lons = data.map((d) => d.lon);
+      const lats = data.map((d) => d.lat);
+
+      const continentTraces = Object.entries(continents).map(([name, continent]) => ({
+        type: "choropleth",
+        locationmode: "ISO-3",
+        locations: continent.countries,
+        z: continent.countries.map(() => 1),
+        colorscale: [[0, continent.color], [1, continent.color]],
+        showscale: false,
+        showlegend: false,
+        marker: { line: { color: "#fffaf0", width: 0.7 } },
+        hovertemplate: `<b>${name}</b><br>Country code: %{location}<extra></extra>`
+      }));
+
+      const regionLabels = {
+        type: "scattergeo",
+        mode: "text",
+        lon: lons,
+        lat: lats,
+        text: data.map((d) => `${d.region}: ${d.count}`),
+        textposition: "top center",
+        hovertemplate: "<b>%{text}</b><extra></extra>",
+        customdata: counts,
+        textfont: {
+          color: "#183b3f",
+          size: 10,
+          family: "DM Sans, sans-serif"
+        }
+      };
+
+      const layout = {
+        margin: { t: 20, r: 10, b: 20, l: 10 },
+        paper_bgcolor: "rgba(0,0,0,0)",
+        plot_bgcolor: "rgba(0,0,0,0)",
+        geo: {
+          projection: {
+            type: "natural earth"
+          },
+          showland: true,
+          landcolor: "#f2efe7",
+          showcountries: true,
+          countrycolor: "#d7ddd5",
+          coastlinecolor: "#d7ddd5",
+          showocean: true,
+          oceancolor: "#edf6f7",
+          showframe: false,
+          lataxis: { range: [-60, 85] },
+          lonaxis: { range: [-180, 180] }
+        },
+        font: {
+          family: "DM Sans, sans-serif",
+          color: "#183b3f"
+        },
+        annotations: [
+          {
+            text: "Recorded snake species",
+            x: 0.02,
+            y: 0.98,
+            xref: "paper",
+            yref: "paper",
+            showarrow: false,
+            font: { size: 12, color: "#183b3f" }
+          }
+        ]
+      };
+
+      const config = {
+        responsive: true,
+        displayModeBar: false
+      };
+
+      Plotly.newPlot("snake-region-map", [...continentTraces, regionLabels], layout, config);
+
+      window.addEventListener("resize", () => Plotly.Plots.resize(document.getElementById("snake-region-map")));
+    })
+    .catch((error) => {
+      const target = document.getElementById("snake-region-map");
+      target.innerHTML = "<p class=\"map-error\">The region data could not be loaded. Please refresh the page.</p>";
+      console.error(error);
+    });
+</script>

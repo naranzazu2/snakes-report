@@ -1,0 +1,156 @@
+---
+title: "Myths vs Facts"
+---
+
+:::: {.myths-page}
+  <p class="myths-intro">Snakebite advice can be confusing. Decide whether each statement is a myth or a fact, then see a short explanation.</p>
+
+::: {.myth-quiz}
+<div class="myth-quiz-topline">
+  <p id="myth-question-count">Question 1 of 6</p>
+  <p id="myth-score">0/6 correct</p>
+</div>
+<progress id="myth-progress" class="myth-progress" max="6" value="0" aria-label="Quiz progress"></progress>
+
+<div id="myth-question-panel" class="myth-question" aria-live="polite">
+  <p class="myth-question-label">Myth or fact?</p>
+  <h2 id="myth-quiz-heading" tabindex="-1"></h2>
+</div>
+
+<div id="myth-answer-controls" class="myth-answer-controls" role="group" aria-label="Choose whether the statement is a myth or a fact">
+  <button type="button" data-answer="Myth">Myth</button>
+  <button type="button" data-answer="Fact">Fact</button>
+</div>
+
+<p id="myth-feedback" class="myth-feedback" aria-live="polite" hidden></p>
+<button id="myth-next" class="myth-next" type="button" hidden>Next statement</button>
+
+<div id="myth-result" class="myth-result" hidden>
+  <p class="myth-question-label">Quiz complete</p>
+  <h2>Your score: <span id="myth-final-score"></span></h2>
+  <p id="myth-result-message"></p>
+  <button id="myth-restart" class="myth-restart" type="button">Try again</button>
+</div>
+:::
+::::
+
+<script>
+const snakebiteStatements = [
+  {
+    statement: "You should suck the venom out of a snakebite.",
+    answer: "Myth",
+    explanation: "Suction does not remove venom effectively and may worsen injury or delay emergency care."
+  },
+  {
+    statement: "All snakes are venomous.",
+    answer: "Myth",
+    explanation: "Most snake species are not venomous. Still, treat any suspected bite as an emergency and do not handle the snake."
+  },
+  {
+    statement: "A snake can bite you after it is dead.",
+    answer: "Fact",
+    explanation: "Reflex movements can persist after death, and a bite may still deliver venom. Never touch or pick up a dead snake."
+  },
+  {
+    statement: "Snakes will chase you if provoked.",
+    answer: "Myth",
+    explanation: "Most snakes prefer to escape. A snake that feels cornered may defend itself, so give it space and move away calmly."
+  },
+  {
+    statement: "Keeping the bite below heart level slows venom spread.",
+    answer: "Fact",
+    explanation: "Some first-aid guidance recommends keeping the affected limb still and below heart level if possible. Follow local emergency advice, since protocols can vary."
+  },
+  {
+    statement: "Applying a tight tourniquet helps after a snakebite.",
+    answer: "Myth",
+    explanation: "A tight tourniquet can restrict circulation and cause serious tissue damage. Keep the person still and get urgent medical help instead."
+  }
+];
+
+const questionCount = document.getElementById("myth-question-count");
+const scoreLabel = document.getElementById("myth-score");
+const progressBar = document.getElementById("myth-progress");
+const questionHeading = document.getElementById("myth-quiz-heading");
+const questionPanel = document.getElementById("myth-question-panel");
+const answerControls = document.getElementById("myth-answer-controls");
+const answerButtons = [...answerControls.querySelectorAll("button")];
+const feedback = document.getElementById("myth-feedback");
+const nextButton = document.getElementById("myth-next");
+const resultPanel = document.getElementById("myth-result");
+const finalScore = document.getElementById("myth-final-score");
+const resultMessage = document.getElementById("myth-result-message");
+const restartButton = document.getElementById("myth-restart");
+
+let currentQuestion = 0;
+let correctAnswers = 0;
+let hasAnswered = false;
+
+function renderQuestion(moveFocus = false) {
+  const item = snakebiteStatements[currentQuestion];
+  questionCount.textContent = `Question ${currentQuestion + 1} of ${snakebiteStatements.length}`;
+  scoreLabel.textContent = `${correctAnswers}/${snakebiteStatements.length} correct`;
+  progressBar.value = currentQuestion;
+  questionHeading.textContent = item.statement;
+  questionPanel.hidden = false;
+  answerControls.hidden = false;
+  resultPanel.hidden = true;
+  feedback.hidden = true;
+  feedback.className = "myth-feedback";
+  nextButton.hidden = true;
+  hasAnswered = false;
+  answerButtons.forEach((button) => { button.disabled = false; });
+  if (moveFocus) questionHeading.focus();
+}
+
+function showResult() {
+  progressBar.value = snakebiteStatements.length;
+  questionPanel.hidden = true;
+  answerControls.hidden = true;
+  feedback.hidden = true;
+  nextButton.hidden = true;
+  resultPanel.hidden = false;
+  finalScore.textContent = `${correctAnswers}/${snakebiteStatements.length}`;
+  resultMessage.textContent = correctAnswers === snakebiteStatements.length
+    ? "Excellent work. Keep relying on qualified emergency and medical guidance."
+    : "Thanks for playing. For a real bite, contact emergency services or a poison center immediately.";
+  restartButton.focus();
+}
+
+answerButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    if (hasAnswered) return;
+    hasAnswered = true;
+    const item = snakebiteStatements[currentQuestion];
+    const isCorrect = button.dataset.answer === item.answer;
+    if (isCorrect) correctAnswers += 1;
+    scoreLabel.textContent = `${correctAnswers}/${snakebiteStatements.length} correct`;
+    answerButtons.forEach((answerButton) => { answerButton.disabled = true; });
+    feedback.textContent = `${isCorrect ? "Correct." : `The answer is ${item.answer.toLowerCase()}.`} ${item.explanation}`;
+    feedback.classList.toggle("is-incorrect", !isCorrect);
+    feedback.hidden = false;
+    nextButton.textContent = currentQuestion === snakebiteStatements.length - 1
+      ? "See your score"
+      : "Next statement";
+    nextButton.hidden = false;
+    nextButton.focus();
+  });
+});
+
+nextButton.addEventListener("click", () => {
+  currentQuestion += 1;
+  if (currentQuestion === snakebiteStatements.length) {
+    showResult();
+  } else {
+    renderQuestion(true);
+  }
+});
+
+restartButton.addEventListener("click", () => {
+  currentQuestion = 0;
+  correctAnswers = 0;
+  renderQuestion(true);
+});
+
+renderQuestion();
+</script>

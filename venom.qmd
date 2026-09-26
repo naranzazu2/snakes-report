@@ -1,0 +1,107 @@
+---
+title: "Venom and Antivenom Guide"
+---
+
+::: {.venom-page}
+<p class="venom-intro">Choose a snake to see a brief venom profile, possible effects on people, and antivenom products listed for that species.</p>
+
+<div class="venom-selector">
+  <label for="venom-snake-select">Snake species</label>
+  <select id="venom-snake-select" aria-controls="venom-details">
+    <option value="naja-naja">Indian cobra · <em>Naja naja</em></option>
+    <option value="daboia-russelii">Russell's viper · <em>Daboia russelii</em></option>
+    <option value="echis-carinatus">Saw-scaled viper · <em>Echis carinatus</em></option>
+    <option value="bothrops-asper">Terciopelo · <em>Bothrops asper</em></option>
+    <option value="oxyuranus-scutellatus">Coastal taipan · <em>Oxyuranus scutellatus</em></option>
+  </select>
+</div>
+
+<section id="venom-details" class="venom-details" aria-live="polite">
+<p id="venom-region" class="venom-region"></p>
+<h2 id="venom-name"></h2>
+<div class="venom-facts">
+<div>
+<h3>Venom profile</h3>
+<p id="venom-type"></p>
+</div>
+<div>
+<h3>Possible effects on people</h3>
+<p id="venom-effects"></p>
+</div>
+</div>
+<div class="venom-product">
+<h3>Antivenom listed in Impact's database</h3>
+<p id="venom-product-name"></p>
+<p id="venom-product-scope" class="venom-product-scope"></p>
+</div>
+</section>
+
+<aside class="venom-caution">
+  A snakebite is a medical emergency. This page is for learning only: symptoms vary, and a database listing does not mean a product is approved or available where a bite occurs. Antivenom choice and treatment must be decided by medical professionals using local guidance.
+</aside>
+
+<div class="venom-sources">
+  <p><strong>Sources:</strong> <a href="https://snakedb.org/pages/toxicity-species.php">SnakeDB toxicity by species</a>; <a href="https://www.who.int/news-room/fact-sheets/detail/snakebite-envenoming">WHO snakebite envenoming fact sheet</a>; <a href="https://www.impactglobalhealth.org/data/snakebite-envenoming-medicines-database">Impact Global Health medicines database</a> and its <a href="https://cdn.impactglobalhealth.org/media/SBE-profiles.xlsx">product profiles</a>.</p>
+  <p>SnakeDB marks the selected species as venomous; it does not classify their clinical venom effects. The effect summaries here describe possible syndromes, not what will happen in every bite.</p>
+</div>
+:::
+
+<script>
+const venomProfiles = {
+  "naja-naja": {
+    name: "Indian cobra (Naja naja)",
+    region: "Elapidae · South Asia",
+    type: "Primarily neurotoxic; local tissue effects can also occur.",
+    effects: "Severe envenoming can disrupt nerve-to-muscle signaling, causing drooping eyelids, weakness, trouble speaking or swallowing, and potentially difficulty breathing or paralysis. Local tissue injury may also occur.",
+    product: "Polyvalent Antisnake Venom Serum · National Institute of Health, Pakistan",
+    scope: "Impact lists Naja naja among the product's target species. The product is associated with Pakistan."
+  },
+  "daboia-russelii": {
+    name: "Russell's viper (Daboia russelii)",
+    region: "Viperidae · South Asia",
+    type: "Primarily haemotoxic and procoagulant.",
+    effects: "Venom can disrupt blood clotting and damage blood vessels, leading to abnormal bleeding. Severe bites may also cause shock or acute kidney injury.",
+    product: "Polyvalent Antisnake Venom Serum · National Institute of Health, Pakistan",
+    scope: "Impact lists Daboia russelii among the product's target species. The product is associated with Pakistan."
+  },
+  "echis-carinatus": {
+    name: "Saw-scaled viper (Echis carinatus)",
+    region: "Viperidae · South Asia and the Middle East",
+    type: "Primarily haemotoxic and procoagulant.",
+    effects: "Envenoming can cause a serious clotting disorder, bleeding, swelling, and local tissue injury. Severe cases may affect blood pressure and kidney function.",
+    product: "Polyvalent Antisnake Venom Serum · National Institute of Health, Pakistan",
+    scope: "Impact lists Echis carinatus among the product's target species. The product is associated with Pakistan."
+  },
+  "bothrops-asper": {
+    name: "Terciopelo (Bothrops asper)",
+    region: "Viperidae · Central America and northern South America",
+    type: "Haemorrhagic, procoagulant, and tissue-damaging effects are important.",
+    effects: "Bites can cause severe pain and swelling, bleeding and clotting problems, and local tissue damage. Serious envenoming may lead to shock or kidney injury.",
+    product: "Antivipmyn TRI · Instituto Bioclon / Laboratorios Silanes, Mexico",
+    scope: "Impact lists Bothrops asper among the product's covered species. Product suitability depends on the bite location and local medical guidance."
+  },
+  "oxyuranus-scutellatus": {
+    name: "Coastal taipan (Oxyuranus scutellatus)",
+    region: "Elapidae · Australia and New Guinea",
+    type: "Neurotoxic, procoagulant, and myotoxic effects can occur.",
+    effects: "Severe envenoming can affect nerve signaling, blood clotting, and muscle tissue. Possible consequences include paralysis, bleeding or clotting disorders, muscle breakdown, and kidney injury.",
+    product: "Seqirus Taipan antivenom · Seqirus, Australia",
+    scope: "Impact lists Oxyuranus scutellatus among the product's target species. The product is associated with Australia."
+  }
+};
+
+const snakeSelect = document.getElementById("venom-snake-select");
+
+function showVenomProfile() {
+  const profile = venomProfiles[snakeSelect.value];
+  document.getElementById("venom-name").textContent = profile.name;
+  document.getElementById("venom-region").textContent = profile.region;
+  document.getElementById("venom-type").textContent = profile.type;
+  document.getElementById("venom-effects").textContent = profile.effects;
+  document.getElementById("venom-product-name").textContent = profile.product;
+  document.getElementById("venom-product-scope").textContent = profile.scope;
+}
+
+snakeSelect.addEventListener("change", showVenomProfile);
+showVenomProfile();
+</script>

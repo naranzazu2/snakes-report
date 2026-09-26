@@ -1,0 +1,132 @@
+---
+title: "Snakebites"
+---
+
+::: {.snakebite-page}
+<p class="snakebite-intro">A snakebite is the bite itself; envenoming means venom entered the body. Not every bite causes envenoming, and timely medical care can be lifesaving.</p>
+
+<div class="snakebite-chart-card">
+  <div id="snakebite-chart" class="snakebite-chart" role="img" aria-label="Approximate annual snakebite estimates for Africa and Asia"></div>
+</div>
+
+::: {.snakebite-note}
+**How to read this chart:** Labels show the annual estimates. The shaded end of Africa's bar marks its 435,000 to 580,000 range. Africa counts bites needing treatment, Asia estimates envenomings, and the Americas figure counts reported bites treated in health centers. These measures are not directly comparable, and reported cases may miss bites that never reach medical care.
+:::
+
+::: {.snakebite-source}
+**Sources:** World Health Organization, [Snakebite envenoming fact sheet](https://www.who.int/news-room/fact-sheets/detail/snakebite-envenoming); Chippaux, [Incidence and mortality due to snakebite in the Americas](https://doi.org/10.1371/journal.pntd.0005662) (2017). Regional values come from different sources and methods, not a harmonized dataset.
+:::
+:::
+
+::: {.quick-facts}
+### If a bite happens
+
+1. Move away from the snake and keep calm.
+2. Call local emergency services immediately.
+3. Keep the person and the affected limb as still as possible.
+4. Do not cut the wound, suck out venom, or apply a tourniquet.
+:::
+
+::: {.bite-estimate}
+### WHO estimates
+
+The World Health Organization estimates that **5.4 million people are bitten by snakes worldwide each year**. Of these, **1.8 to 2.7 million** experience envenoming, and **81,410 to 137,880** people die each year.
+
+These global figures and the regional chart estimates are population-level estimates, not a count for any individual country or snake species. Regional values use different definitions and may not be directly comparable.
+
+[Read the WHO fact sheet](https://www.who.int/news-room/fact-sheets/detail/snakebite-envenoming)
+:::
+
+::: {.callout-warning}
+## Important
+
+This website is educational and is not a substitute for emergency care. Never try to catch or handle the snake. If someone has been bitten, contact emergency services or a poison center now.
+:::
+
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<script>
+fetch("./data/snakebite_regional_estimates.csv")
+  .then((response) => {
+    if (!response.ok) throw new Error("CSV not found");
+    return response.text();
+  })
+  .then((text) => {
+    const rows = text.trim().split(/\r?\n/).slice(1);
+    const estimates = rows.map((line) => {
+      const [region, measure, lowerText, upperText] = line.split(",");
+      return { region, measure, lower: Number(lowerText), upper: Number(upperText) };
+    }).filter((estimate) => estimate.region && Number.isFinite(estimate.lower) && Number.isFinite(estimate.upper));
+
+    const formatCount = (value) => new Intl.NumberFormat("en-US").format(value);
+    const formatEstimate = (estimate) => estimate.lower === 0
+      ? `Up to ${formatCount(estimate.upper)}`
+      : estimate.lower === estimate.upper
+        ? formatCount(estimate.upper)
+        : `${formatCount(estimate.lower)} to ${formatCount(estimate.upper)}`;
+    const colors = {
+      Africa: { main: "#e8765f", range: "#f4b8aa" },
+      Asia: { main: "#5793b5" },
+      Americas: { main: "#62a98b" }
+    };
+    const makeTrace = (estimate, amount, color, label) => ({
+      type: "bar",
+      orientation: "h",
+      name: estimate.region,
+      y: [estimate.region],
+      x: [amount],
+      marker: { color },
+      text: [label],
+      textposition: "outside",
+      textfont: { color: "#183b3f", size: 12 },
+      cliponaxis: false,
+      customdata: [[estimate.measure, formatEstimate(estimate)]],
+      hovertemplate: "<b>%{y}</b><br>%{customdata[0]}<br>%{customdata[1]} annually<extra></extra>"
+    });
+    const traces = estimates.flatMap((estimate) => {
+      const color = colors[estimate.region] || { main: "#62a98b" };
+      const solidEnd = estimate.lower === 0 ? estimate.upper : estimate.lower;
+      const estimateLabel = formatEstimate(estimate);
+      const mainTrace = makeTrace(estimate, solidEnd, color.main, estimate.upper === solidEnd ? estimateLabel : "");
+      if (estimate.upper === solidEnd) return [mainTrace];
+      return [mainTrace, makeTrace(estimate, estimate.upper - solidEnd, color.range, estimateLabel)];
+    });
+
+    const layout = {
+      barmode: "stack",
+      margin: { t: 48, r: 24, b: 64, l: 100 },
+      paper_bgcolor: "rgba(0,0,0,0)",
+      plot_bgcolor: "rgba(0,0,0,0)",
+      font: { family: "DM Sans, sans-serif", color: "#183b3f" },
+      xaxis: {
+        title: { text: "Estimated people per year" },
+        range: [0, 2200000],
+        gridcolor: "#d7ddd5",
+        tickformat: ",.0s",
+        zeroline: false
+      },
+      yaxis: { automargin: true, categoryorder: "array", categoryarray: ["Asia", "Africa", "Americas"] },
+      showlegend: false,
+      annotations: [{
+        text: "Approximate regional estimates",
+        x: 0,
+        y: 1.16,
+        xref: "paper",
+        yref: "paper",
+        showarrow: false,
+        xanchor: "left",
+        font: { size: 13, color: "#557174" }
+      }]
+    };
+
+    Plotly.newPlot("snakebite-chart", traces, layout, {
+      responsive: true,
+      displayModeBar: false
+    });
+
+    window.addEventListener("resize", () => Plotly.Plots.resize(document.getElementById("snakebite-chart")));
+  })
+  .catch((error) => {
+    document.getElementById("snakebite-chart").innerHTML = "<p class=\"map-error\">The snakebite estimates could not be loaded. Please refresh the page.</p>";
+    console.error(error);
+  });
+</script>

@@ -1,0 +1,127 @@
+---
+title: "Snakebite First Aid"
+---
+
+<main class="first-aid-page">
+<p class="first-aid-intro">A suspected snakebite is an emergency. Get professional help right away, keep the person still, and follow instructions from emergency services or a poison center.</p>
+
+<ol class="first-aid-steps" aria-label="Snakebite first aid steps">
+  <li class="first-aid-step">
+    <svg class="first-aid-illustration" viewBox="0 0 120 96" role="img" aria-label="Person moving away from a snake">
+      <rect width="120" height="96" rx="10" fill="#d8ebe0"/>
+      <circle cx="39" cy="28" r="9" fill="#e8765f"/>
+      <path d="M38 39v24m0-15-15 12m15-12 15 8m-15 7-11 18m11-18 14 17" fill="none" stroke="#183b3f" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+      <path d="M66 49h27m-8-8 8 8-8 8" fill="none" stroke="#183b3f" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+      <path d="M83 75c8-9 16 7 24-2" fill="none" stroke="#e8765f" stroke-linecap="round" stroke-width="5"/>
+      <circle cx="108" cy="72" r="2" fill="#183b3f"/>
+    </svg>
+    <section>
+      <p class="first-aid-count">Step 1</p>
+      <h2>Move away and stay calm</h2>
+      <p>Get out of striking distance without approaching the snake. Sit or lie down and move as little as possible.</p>
+    </section>
+  </li>
+
+  <li class="first-aid-step">
+    <svg class="first-aid-illustration" viewBox="0 0 120 96" role="img" aria-label="Phone used to call for emergency help">
+      <rect width="120" height="96" rx="10" fill="#f2e8d8"/>
+      <rect x="38" y="12" width="44" height="72" rx="8" fill="#183b3f"/>
+      <rect x="43" y="20" width="34" height="49" rx="3" fill="#fffaf0"/>
+      <path d="M60 29v27m-13-13h26" stroke="#e8765f" stroke-linecap="round" stroke-width="6"/>
+      <circle cx="60" cy="76" r="3" fill="#fffaf0"/>
+      <path d="M23 28c-4 4-4 11 0 15m-7-21c-10 10-10 27 0 37" fill="none" stroke="#62a98b" stroke-linecap="round" stroke-width="4"/>
+      <path d="M97 28c4 4 4 11 0 15m7-21c10 10 10 27 0 37" fill="none" stroke="#62a98b" stroke-linecap="round" stroke-width="4"/>
+    </svg>
+    <section>
+      <p class="first-aid-count">Step 2</p>
+      <h2>Call emergency services now</h2>
+      <p>Call your local emergency number or poison center, even if symptoms seem mild. Put the phone on speaker and follow the dispatcher’s instructions.</p>
+    </section>
+  </li>
+
+  <li class="first-aid-step">
+    <svg class="first-aid-illustration" viewBox="0 0 120 96" role="img" aria-label="Still arm supported below the heart">
+      <rect width="120" height="96" rx="10" fill="#dceaf0"/>
+      <path d="M25 34c0-8 7-14 15-14s15 6 15 14v40H25z" fill="#e8765f"/>
+      <path d="M53 41h23c7 0 11 5 11 11s-4 10-11 10H55" fill="none" stroke="#183b3f" stroke-linecap="round" stroke-width="10"/>
+      <path d="M87 60h16v15H49" fill="none" stroke="#62a98b" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+      <path d="M93 37v12m-5-5 5 5 5-5" fill="none" stroke="#183b3f" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <path d="M31 80h65" stroke="#183b3f" stroke-linecap="round" stroke-width="3"/>
+    </svg>
+    <section>
+      <p class="first-aid-count">Step 3</p>
+      <h2>Keep the person and limb still</h2>
+      <p>Help them rest, and gently support the bitten limb so it stays still and below heart level if possible. Avoid walking or unnecessary movement.</p>
+    </section>
+  </li>
+
+  <li class="first-aid-step">
+    <svg class="first-aid-illustration" viewBox="0 0 120 96" role="img" aria-label="Watch being removed before swelling begins">
+      <rect width="120" height="96" rx="10" fill="#f2e8d8"/>
+      <path d="M25 48c0-10 8-18 18-18h32c10 0 18 8 18 18v8c0 10-8 18-18 18H43c-10 0-18-8-18-18z" fill="#e8765f"/>
+      <rect x="49" y="39" width="18" height="26" rx="4" fill="#fffaf0" stroke="#183b3f" stroke-width="3"/>
+      <path d="M58 44v9l6 4" fill="none" stroke="#183b3f" stroke-linecap="round" stroke-width="2.5"/>
+      <path d="M20 23l12 10m56 30 12 10M26 21l-5 7m61 39 8-2" fill="none" stroke="#183b3f" stroke-linecap="round" stroke-width="3"/>
+      <path d="M15 48h9m72 0h9" stroke="#62a98b" stroke-linecap="round" stroke-width="4"/>
+    </svg>
+    <section>
+      <p class="first-aid-count">Step 4</p>
+      <h2>Remove tight items near the bite</h2>
+      <p>Take off rings, watches, and tight clothing on the affected limb before swelling starts. Do not disturb or put pressure on the bite.</p>
+    </section>
+  </li>
+
+  <li class="first-aid-step">
+    <svg class="first-aid-illustration" viewBox="0 0 120 96" role="img" aria-label="First aid items crossed out to show what not to do">
+      <rect width="120" height="96" rx="10" fill="#f9e2d9"/>
+      <path d="M39 30h42v43H39zM49 22h22v8H49z" fill="#fffaf0" stroke="#183b3f" stroke-linejoin="round" stroke-width="3"/>
+      <path d="M60 39v24m-12-12h24" stroke="#62a98b" stroke-linecap="round" stroke-width="6"/>
+      <circle cx="60" cy="51" r="37" fill="none" stroke="#e8765f" stroke-width="6"/>
+      <path d="m34 25 52 52" stroke="#e8765f" stroke-linecap="round" stroke-width="7"/>
+    </svg>
+    <section>
+      <p class="first-aid-count">Step 5</p>
+      <h2>Do not use harmful treatments</h2>
+      <p>Do not cut the wound, suck out venom, apply a tourniquet or ice, or try home remedies. These actions can worsen injury or delay treatment.</p>
+    </section>
+  </li>
+
+  <li class="first-aid-step">
+    <svg class="first-aid-illustration" viewBox="0 0 120 96" role="img" aria-label="Snake observed from a safe distance">
+      <rect width="120" height="96" rx="10" fill="#e5ebd7"/>
+      <path d="M17 69c8-18 20 15 30-3s20 12 30-4" fill="none" stroke="#62a98b" stroke-linecap="round" stroke-width="8"/>
+      <circle cx="79" cy="62" r="3" fill="#183b3f"/>
+      <circle cx="89" cy="43" r="20" fill="#fffaf0" stroke="#183b3f" stroke-width="4"/>
+      <path d="m104 58 10 11" stroke="#183b3f" stroke-linecap="round" stroke-width="6"/>
+      <path d="M24 29h34m-9-8 9 8-9 8" fill="none" stroke="#e8765f" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </svg>
+    <section>
+      <p class="first-aid-count">Step 6</p>
+      <h2>Notice the snake only if safe</h2>
+      <p>From a safe distance, remember its color, pattern, and size, or take a photo only if this does not bring you closer. Never try to catch or kill it.</p>
+    </section>
+  </li>
+
+  <li class="first-aid-step">
+    <svg class="first-aid-illustration" viewBox="0 0 120 96" role="img" aria-label="Hospital with a medical cross">
+      <rect width="120" height="96" rx="10" fill="#dceaf0"/>
+      <path d="M19 80V36h82v44" fill="#fffaf0" stroke="#183b3f" stroke-linejoin="round" stroke-width="4"/>
+      <path d="M48 36V20h24v16" fill="#fffaf0" stroke="#183b3f" stroke-linejoin="round" stroke-width="4"/>
+      <path d="M60 23v10m-5-5h10" stroke="#e8765f" stroke-linecap="round" stroke-width="4"/>
+      <path d="M34 50h9m-4-4v9m43-5h9m-4-4v9" stroke="#62a98b" stroke-linecap="round" stroke-width="4"/>
+      <path d="M51 80V62h18v18" fill="#d8ebe0" stroke="#183b3f" stroke-width="3"/>
+      <path d="M12 80h96" stroke="#183b3f" stroke-linecap="round" stroke-width="4"/>
+    </svg>
+    <section>
+      <p class="first-aid-count">Step 7</p>
+      <h2>Get to a hospital promptly</h2>
+      <p>Go as soon as possible, preferably by ambulance. Clinicians will assess the bite and decide whether antivenom or other treatment is needed.</p>
+    </section>
+  </li>
+</ol>
+
+<aside class="callout-warning">
+  <h2>Important</h2>
+  <p>This website is educational and is not a substitute for emergency care. Never try to catch or handle the snake. If someone has been bitten, contact emergency services or a poison center now.</p>
+</aside>
+</main>
