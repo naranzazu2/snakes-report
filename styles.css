@@ -132,6 +132,55 @@ h1 {
   padding: 1rem;
 }
 
+.continent-species-panel {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(24, 59, 63, 0.08);
+  border-radius: 8px;
+  margin-top: 1rem;
+  padding: 1.25rem;
+}
+
+.continent-species-panel h2 {
+  font-size: 1.35rem;
+  margin: 0 0 0.5rem;
+}
+
+.continent-species-panel > p {
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 76ch;
+}
+
+.continent-species-list {
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  list-style: decimal;
+  margin: 1rem 0 0;
+  padding-left: 1.6rem;
+}
+
+.continent-species-list li {
+  background: rgba(216, 235, 224, 0.55);
+  border-top: 3px solid var(--coral);
+  min-width: 0;
+  padding: 0.75rem;
+}
+
+.continent-species-list strong,
+.continent-species-list em {
+  display: block;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.continent-species-list em {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin-top: 0.25rem;
+}
+
 .continent-map {
   min-height: 560px;
   width: 100%;
@@ -680,6 +729,10 @@ h1 {
 }
 
 @media (max-width: 720px) {
+  .continent-species-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .continent-map {
     min-height: 420px;
   }

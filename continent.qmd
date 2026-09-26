@@ -1,5 +1,5 @@
 ---
-title: "Snake Species by Continent"
+title: "Continental Species"
 ---
 
 ::: {.continent-page}
@@ -13,6 +13,12 @@ title: "Snake Species by Continent"
   <span><i style="--swatch: #88a94e"></i>Oceania</span>
 </div>
 <div id="snake-region-map" class="continent-map" aria-label="Snake species by geographic region map"></div>
+:::
+
+::: {.continent-species-panel}
+<h2 id="continent-species-heading">Common snake species</h2>
+<p id="continent-species-description" aria-live="polite">Click a continent on the map to see five familiar species recorded in that region. The source tracks species presence, not population abundance, so this is not a ranking by how many snakes live there.</p>
+<ol id="continent-species-list" class="continent-species-list" aria-labelledby="continent-species-heading"></ol>
 :::
 
 ::: {.continent-callout}
@@ -69,6 +75,87 @@ title: "Snake Species by Continent"
     }
   };
 
+  const continentSpecies = {
+    "Africa": [
+      ["Puff adder", "Bitis arietans"],
+      ["Black mamba", "Dendroaspis polylepis"],
+      ["Cape cobra", "Naja nivea"],
+      ["Boomslang", "Dispholidus typus"],
+      ["African rock python", "Python sebae"]
+    ],
+    "Asia": [
+      ["Indian cobra", "Naja naja"],
+      ["Russell's viper", "Daboia russelii"],
+      ["Common krait", "Bungarus caeruleus"],
+      ["King cobra", "Ophiophagus hannah"],
+      ["Reticulated python", "Malayopython reticulatus"]
+    ],
+    "Europe": [
+      ["European adder", "Vipera berus"],
+      ["Grass snake", "Natrix natrix"],
+      ["Aesculapian snake", "Zamenis longissimus"],
+      ["Montpellier snake", "Malpolon monspessulanus"],
+      ["Nose-horned viper", "Vipera ammodytes"]
+    ],
+    "North America": [
+      ["Common garter snake", "Thamnophis sirtalis"],
+      ["Eastern rat snake", "Pantherophis alleghaniensis"],
+      ["North American racer", "Coluber constrictor"],
+      ["Copperhead", "Agkistrodon contortrix"],
+      ["Western diamondback rattlesnake", "Crotalus atrox"]
+    ],
+    "South America": [
+      ["Boa constrictor", "Boa constrictor"],
+      ["Green anaconda", "Eunectes murinus"],
+      ["South American rattlesnake", "Crotalus durissus"],
+      ["Jararaca", "Bothrops jararaca"],
+      ["Terciopelo", "Bothrops asper"]
+    ],
+    "Oceania": [
+      ["Eastern brown snake", "Pseudonaja textilis"],
+      ["Red-bellied black snake", "Pseudechis porphyriacus"],
+      ["Coastal taipan", "Oxyuranus scutellatus"],
+      ["Carpet python", "Morelia spilota"],
+      ["Common death adder", "Acanthophis antarcticus"]
+    ]
+  };
+
+  const continentForRegion = {
+    "Africa": "Africa",
+    "Near East": "Asia",
+    "Asia": "Asia",
+    "Europe": "Europe",
+    "Australia": "Oceania",
+    "North America": "North America",
+    "Central America": "North America",
+    "Caribbean": "North America",
+    "South America": "South America",
+    "Oceania": "Oceania"
+  };
+
+  const speciesHeading = document.getElementById("continent-species-heading");
+  const speciesDescription = document.getElementById("continent-species-description");
+  const speciesList = document.getElementById("continent-species-list");
+
+  function showContinentSpecies(continentName) {
+    const species = continentSpecies[continentName];
+    if (!species) return;
+
+    speciesHeading.textContent = `Common snake species in ${continentName}`;
+    speciesDescription.textContent = "These five familiar species are recorded in this region. The source tracks presence, not population abundance, so the list is not an abundance ranking.";
+    speciesList.replaceChildren();
+
+    species.forEach(([commonName, scientificName]) => {
+      const item = document.createElement("li");
+      const commonLabel = document.createElement("strong");
+      const scientificLabel = document.createElement("em");
+      commonLabel.textContent = commonName;
+      scientificLabel.textContent = scientificName;
+      item.append(commonLabel, scientificLabel);
+      speciesList.append(item);
+    });
+  }
+
   fetch("./data/snake_species_by_region.csv")
     .then((response) => {
       if (!response.ok) {
@@ -91,14 +178,15 @@ title: "Snake Species by Continent"
         })
         .filter(Boolean);
 
-      const counts = data.map((d) => d.count);
       const lons = data.map((d) => d.lon);
       const lats = data.map((d) => d.lat);
 
       const continentTraces = Object.entries(continents).map(([name, continent]) => ({
         type: "choropleth",
+        name,
         locationmode: "ISO-3",
         locations: continent.countries,
+        customdata: continent.countries.map(() => name),
         z: continent.countries.map(() => 1),
         colorscale: [[0, continent.color], [1, continent.color]],
         showscale: false,
@@ -115,7 +203,8 @@ title: "Snake Species by Continent"
         text: data.map((d) => `${d.region}: ${d.count}`),
         textposition: "top center",
         hovertemplate: "<b>%{text}</b><extra></extra>",
-        customdata: counts,
+        name: "Geographic regions",
+        customdata: data.map((regionData) => regionData.region),
         textfont: {
           color: "#183b3f",
           size: 10,
@@ -164,7 +253,15 @@ title: "Snake Species by Continent"
         displayModeBar: false
       };
 
-      Plotly.newPlot("snake-region-map", [...continentTraces, regionLabels], layout, config);
+      Plotly.newPlot("snake-region-map", [...continentTraces, regionLabels], layout, config).then((map) => {
+        map.on("plotly_click", (event) => {
+          const clickedPoint = event.points?.[0];
+          let clickedRegion = clickedPoint?.customdata;
+          if (Array.isArray(clickedRegion)) clickedRegion = clickedRegion[0];
+          const continentName = continentForRegion[clickedRegion] || clickedRegion;
+          showContinentSpecies(continentName);
+        });
+      });
 
       window.addEventListener("resize", () => Plotly.Plots.resize(document.getElementById("snake-region-map")));
     })

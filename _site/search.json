@@ -51,9 +51,9 @@
   {
     "objectID": "continent.html",
     "href": "continent.html",
-    "title": "Snake Species by Continent",
+    "title": "Continental Species",
     "section": "",
-    "text": "Africa Asia Europe North America South America Oceania\n\n\n\n\n\n\nImportant: The Reptile Database regions are geographic distribution regions. A single snake species can occur in more than one region, so the region totals should not be summed to obtain the global number of snake species.\n\n\nSource: The Reptile Database, Worldwide Diversity of Reptiles. This chart uses the database’s geographic distribution regions and the accepted snake taxon in the Reptile Database advanced search for Serpentes.\nMethodology: Counts represent the number of snake species recorded in each geographic distribution region. Because species can be assigned to more than one region, these values are region-level counts rather than unique global totals."
+    "text": "Africa Asia Europe North America South America Oceania\n\n\n\n\n\n\n\nCommon snake species\n\n\nClick a continent on the map to see five familiar species recorded in that region. The source tracks species presence, not population abundance, so this is not a ranking by how many snakes live there.\n\n\n\n\n\nImportant: The Reptile Database regions are geographic distribution regions. A single snake species can occur in more than one region, so the region totals should not be summed to obtain the global number of snake species.\n\n\nSource: The Reptile Database, Worldwide Diversity of Reptiles. This chart uses the database’s geographic distribution regions and the accepted snake taxon in the Reptile Database advanced search for Serpentes.\nMethodology: Counts represent the number of snake species recorded in each geographic distribution region. Because species can be assigned to more than one region, these values are region-level counts rather than unique global totals."
   },
   {
     "objectID": "venom.html",

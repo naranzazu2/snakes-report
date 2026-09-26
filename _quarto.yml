@@ -16,7 +16,7 @@ website:
       - href: story.qmd
         text: Story
       - href: continent.qmd
-        text: Snake Species by Continent
+        text: Continental Species
       - href: venom.qmd
         text: Venom
       - href: snakebites.qmd
