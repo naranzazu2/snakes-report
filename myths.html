@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Continental Species – Snake Atlas</title>
+<title>Myths vs Facts – Snake Atlas</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -104,7 +104,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Story</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./continent.html" aria-current="page"> 
+    <a class="nav-link" href="./continent.html"> 
 <span class="menu-text">Continental Species</span></a>
   </li>  
   <li class="nav-item">
@@ -120,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">First Aid</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./myths.html"> 
+    <a class="nav-link active" href="./myths.html" aria-current="page"> 
 <span class="menu-text">Myths vs Facts</span></a>
   </li>  
   <li class="nav-item">
@@ -144,7 +144,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Continental Species</h1>
+<h1 class="title">Myths vs Facts</h1>
 </div>
 
 
@@ -161,271 +161,168 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="continent-page">
-<div class="continent-chart-card">
-<div class="continent-legend" aria-label="Continent map key">
-<p><span><i style="--swatch: #e8765f"></i>Africa</span> <span><i style="--swatch: #e8bd55"></i>Asia</span> <span><i style="--swatch: #62a98b"></i>Europe</span> <span><i style="--swatch: #5793b5"></i>North America</span> <span><i style="--swatch: #b381aa"></i>South America</span> <span><i style="--swatch: #88a94e"></i>Oceania</span></p>
-</div>
-<div id="snake-region-map" class="continent-map" aria-label="Snake species by geographic region map">
-
-</div>
-</div>
-<div class="continent-species-panel">
-<h2 id="continent-species-heading" class="anchored">
-Common snake species
-</h2>
-<p id="continent-species-description" aria-live="polite">
-Click a continent on the map to see five familiar species recorded in that region. The source tracks species presence, not population abundance, so this is not a ranking by how many snakes live there.
+<div class="myths-page">
+<p class="myths-intro">
+Snakebite advice can be confusing. Decide whether each statement is a myth or a fact, then see a short explanation.
 </p>
-<ol id="continent-species-list" class="continent-species-list" aria-labelledby="continent-species-heading">
-</ol>
+<div class="myth-quiz">
+<div class="myth-quiz-topline">
+<p id="myth-question-count">
+Question 1 of 6
+</p>
+<p id="myth-score">
+0/6 correct
+</p>
 </div>
-<div class="continent-callout">
-<p><strong>Important:</strong> The Reptile Database regions are geographic distribution regions. A single snake species can occur in more than one region, so the region totals should not be summed to obtain the global number of snake species.</p>
+<progress id="myth-progress" class="myth-progress" max="6" value="0" aria-label="Quiz progress">
+</progress>
+<div id="myth-question-panel" class="myth-question" aria-live="polite">
+<p class="myth-question-label">
+Myth or fact?
+</p>
+<h2 id="myth-quiz-heading" tabindex="-1" class="anchored">
+</h2>
 </div>
-<div class="continent-source">
-<p><strong>Source:</strong> The Reptile Database, <a href="https://www.reptile-database.org/db-info/diversity.html">Worldwide Diversity of Reptiles</a>. This chart uses the database’s geographic distribution regions and the accepted snake taxon in the Reptile Database advanced search for Serpentes.</p>
-<p><strong>Methodology:</strong> Counts represent the number of snake species recorded in each geographic distribution region. Because species can be assigned to more than one region, these values are region-level counts rather than unique global totals.</p>
+<div id="myth-answer-controls" class="myth-answer-controls" role="group" aria-label="Choose whether the statement is a myth or a fact">
+<p><button type="button" data-answer="Myth">Myth</button> <button type="button" data-answer="Fact">Fact</button></p>
+</div>
+<p id="myth-feedback" class="myth-feedback" aria-live="polite" hidden="">
+</p>
+<button id="myth-next" class="myth-next" type="button" hidden="">
+Next statement
+</button>
+<div id="myth-result" class="myth-result" hidden="">
+<p class="myth-question-label">
+Quiz complete
+</p>
+<h2 class="anchored">
+Your score: <span id="myth-final-score"></span>
+</h2>
+<p id="myth-result-message">
+</p>
+<p><button id="myth-restart" class="myth-restart" type="button">Try again</button></p>
 </div>
 </div>
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</div>
 <script>
-  const regionPoints = {
-    "Africa": { lat: 3, lon: 20 },
-    "Near East": { lat: 32, lon: 44 },
-    "Asia": { lat: 35, lon: 95 },
-    "Europe": { lat: 52, lon: 15 },
-    "Australia": { lat: -25, lon: 133 },
-    "North America": { lat: 42, lon: -100 },
-    "Central America": { lat: 16, lon: -90 },
-    "South America": { lat: -15, lon: -60 },
-    "Caribbean": { lat: 20, lon: -75 },
-    "Indian Ocean": { lat: -15, lon: 50 },
-    "Oceania": { lat: -12, lon: 170 }
-  };
-
-  const continents = {
-    "Africa": {
-      color: "#e8765f",
-      countries: ["DZA", "AGO", "BEN", "BWA", "BFA", "BDI", "CPV", "CMR", "CAF", "TCD", "COM", "COG", "COD", "CIV", "DJI", "EGY", "GNQ", "ERI", "SWZ", "ETH", "GAB", "GMB", "GHA", "GIN", "GNB", "KEN", "LSO", "LBR", "LBY", "MDG", "MWI", "MLI", "MRT", "MUS", "MAR", "MOZ", "NAM", "NER", "NGA", "RWA", "STP", "SEN", "SYC", "SLE", "SOM", "ZAF", "SSD", "SDN", "TZA", "TGO", "TUN", "UGA", "ZMB", "ZWE"]
-    },
-    "Asia": {
-      color: "#e8bd55",
-      countries: ["AFG", "ARM", "AZE", "BHR", "BGD", "BTN", "BRN", "KHM", "CHN", "CYP", "GEO", "IND", "IDN", "IRN", "IRQ", "ISR", "JPN", "JOR", "KAZ", "KWT", "KGZ", "LAO", "LBN", "MYS", "MDV", "MNG", "MMR", "NPL", "PRK", "OMN", "PAK", "PSE", "PHL", "QAT", "SAU", "SGP", "KOR", "LKA", "SYR", "TWN", "TJK", "THA", "TLS", "TUR", "TKM", "ARE", "UZB", "VNM", "YEM"]
-    },
-    "Europe": {
-      color: "#62a98b",
-      countries: ["ALB", "AND", "AUT", "BLR", "BEL", "BIH", "BGR", "HRV", "CZE", "DNK", "EST", "FIN", "FRA", "DEU", "GRC", "HUN", "ISL", "IRL", "ITA", "LVA", "LIE", "LTU", "LUX", "MLT", "MDA", "MCO", "MNE", "NLD", "MKD", "NOR", "POL", "PRT", "ROU", "RUS", "SMR", "SRB", "SVK", "SVN", "ESP", "SWE", "CHE", "UKR", "GBR", "VAT"]
-    },
-    "North America": {
-      color: "#5793b5",
-      countries: ["ATG", "BHS", "BRB", "BLZ", "CAN", "CRI", "CUB", "DMA", "DOM", "SLV", "GRD", "GTM", "HTI", "HND", "JAM", "MEX", "NIC", "PAN", "KNA", "LCA", "VCT", "TTO", "USA", "GRL"]
-    },
-    "South America": {
-      color: "#b381aa",
-      countries: ["ARG", "BOL", "BRA", "CHL", "COL", "ECU", "GUY", "PRY", "PER", "SUR", "URY", "VEN"]
-    },
-    "Oceania": {
-      color: "#88a94e",
-      countries: ["AUS", "FJI", "KIR", "MHL", "FSM", "NRU", "NZL", "PLW", "PNG", "WSM", "SLB", "TON", "TUV", "VUT"]
-    }
-  };
-
-  const continentSpecies = {
-    "Africa": [
-      ["Puff adder", "Bitis arietans"],
-      ["Black mamba", "Dendroaspis polylepis"],
-      ["Cape cobra", "Naja nivea"],
-      ["Boomslang", "Dispholidus typus"],
-      ["African rock python", "Python sebae"]
-    ],
-    "Asia": [
-      ["Indian cobra", "Naja naja"],
-      ["Russell's viper", "Daboia russelii"],
-      ["Common krait", "Bungarus caeruleus"],
-      ["King cobra", "Ophiophagus hannah"],
-      ["Reticulated python", "Malayopython reticulatus"]
-    ],
-    "Europe": [
-      ["European adder", "Vipera berus"],
-      ["Grass snake", "Natrix natrix"],
-      ["Aesculapian snake", "Zamenis longissimus"],
-      ["Montpellier snake", "Malpolon monspessulanus"],
-      ["Nose-horned viper", "Vipera ammodytes"]
-    ],
-    "North America": [
-      ["Common garter snake", "Thamnophis sirtalis"],
-      ["Eastern rat snake", "Pantherophis alleghaniensis"],
-      ["North American racer", "Coluber constrictor"],
-      ["Copperhead", "Agkistrodon contortrix"],
-      ["Western diamondback rattlesnake", "Crotalus atrox"]
-    ],
-    "South America": [
-      ["Boa constrictor", "Boa constrictor"],
-      ["Green anaconda", "Eunectes murinus"],
-      ["South American rattlesnake", "Crotalus durissus"],
-      ["Jararaca", "Bothrops jararaca"],
-      ["Terciopelo", "Bothrops asper"]
-    ],
-    "Oceania": [
-      ["Eastern brown snake", "Pseudonaja textilis"],
-      ["Red-bellied black snake", "Pseudechis porphyriacus"],
-      ["Coastal taipan", "Oxyuranus scutellatus"],
-      ["Carpet python", "Morelia spilota"],
-      ["Common death adder", "Acanthophis antarcticus"]
-    ]
-  };
-
-  const continentForRegion = {
-    "Africa": "Africa",
-    "Near East": "Asia",
-    "Asia": "Asia",
-    "Europe": "Europe",
-    "Australia": "Oceania",
-    "North America": "North America",
-    "Central America": "North America",
-    "Caribbean": "North America",
-    "South America": "South America",
-    "Oceania": "Oceania"
-  };
-
-  const speciesHeading = document.getElementById("continent-species-heading");
-  const speciesDescription = document.getElementById("continent-species-description");
-  const speciesList = document.getElementById("continent-species-list");
-
-  function showContinentSpecies(continentName) {
-    const species = continentSpecies[continentName];
-    if (!species) return;
-
-    speciesHeading.textContent = `Common snake species in ${continentName}`;
-    speciesDescription.textContent = "These five familiar species are recorded in this region. The source tracks presence, not population abundance, so the list is not an abundance ranking.";
-    speciesList.replaceChildren();
-
-    species.forEach(([commonName, scientificName]) => {
-      const item = document.createElement("li");
-      const commonLabel = document.createElement("strong");
-      const scientificLabel = document.createElement("em");
-      commonLabel.textContent = commonName;
-      scientificLabel.textContent = scientificName;
-      item.append(commonLabel, scientificLabel);
-      speciesList.append(item);
-    });
+const snakebiteStatements = [
+  {
+    statement: "You should suck the venom out of a snakebite.",
+    answer: "Myth",
+    explanation: "Suction does not remove venom effectively and may worsen injury or delay emergency care."
+  },
+  {
+    statement: "All snakes are venomous.",
+    answer: "Myth",
+    explanation: "Most snake species are not venomous. Still, treat any suspected bite as an emergency and do not handle the snake."
+  },
+  {
+    statement: "A snake can bite you after it is dead.",
+    answer: "Fact",
+    explanation: "Reflex movements can persist after death, and a bite may still deliver venom. Never touch or pick up a dead snake."
+  },
+  {
+    statement: "Snakes will chase you if provoked.",
+    answer: "Myth",
+    explanation: "Most snakes prefer to escape. A snake that feels cornered may defend itself, so give it space and move away calmly."
+  },
+  {
+    statement: "Keeping the bite below heart level slows venom spread.",
+    answer: "Fact",
+    explanation: "Some first-aid guidance recommends keeping the affected limb still and below heart level if possible. Follow local emergency advice, since protocols can vary."
+  },
+  {
+    statement: "Applying a tight tourniquet helps after a snakebite.",
+    answer: "Myth",
+    explanation: "A tight tourniquet can restrict circulation and cause serious tissue damage. Keep the person still and get urgent medical help instead."
   }
+];
 
-  fetch("./data/snake_species_by_region.csv")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("CSV not found");
-      }
-      return response.text();
-    })
-    .then((text) => {
-      const rows = text.trim().split(/\n/).slice(1);
-      const data = rows
-        .map((line) => {
-          const [region, countText] = line.split(",");
-          const count = Number(countText);
-          if (!region || Number.isNaN(count)) return null;
-          return {
-            region: region.trim(),
-            count: count,
-            ...regionPoints[region]
-          };
-        })
-        .filter(Boolean);
+const questionCount = document.getElementById("myth-question-count");
+const scoreLabel = document.getElementById("myth-score");
+const progressBar = document.getElementById("myth-progress");
+const questionHeading = document.getElementById("myth-quiz-heading");
+const questionPanel = document.getElementById("myth-question-panel");
+const answerControls = document.getElementById("myth-answer-controls");
+const answerButtons = [...answerControls.querySelectorAll("button")];
+const feedback = document.getElementById("myth-feedback");
+const nextButton = document.getElementById("myth-next");
+const resultPanel = document.getElementById("myth-result");
+const finalScore = document.getElementById("myth-final-score");
+const resultMessage = document.getElementById("myth-result-message");
+const restartButton = document.getElementById("myth-restart");
 
-      const lons = data.map((d) => d.lon);
-      const lats = data.map((d) => d.lat);
+let currentQuestion = 0;
+let correctAnswers = 0;
+let hasAnswered = false;
 
-      const continentTraces = Object.entries(continents).map(([name, continent]) => ({
-        type: "choropleth",
-        name,
-        locationmode: "ISO-3",
-        locations: continent.countries,
-        customdata: continent.countries.map(() => name),
-        z: continent.countries.map(() => 1),
-        colorscale: [[0, continent.color], [1, continent.color]],
-        showscale: false,
-        showlegend: false,
-        marker: { line: { color: "#fffaf0", width: 0.7 } },
-        hovertemplate: `<b>${name}</b><br>Country code: %{location}<extra></extra>`
-      }));
+function renderQuestion(moveFocus = false) {
+  const item = snakebiteStatements[currentQuestion];
+  questionCount.textContent = `Question ${currentQuestion + 1} of ${snakebiteStatements.length}`;
+  scoreLabel.textContent = `${correctAnswers}/${snakebiteStatements.length} correct`;
+  progressBar.value = currentQuestion;
+  questionHeading.textContent = item.statement;
+  questionPanel.hidden = false;
+  answerControls.hidden = false;
+  resultPanel.hidden = true;
+  feedback.hidden = true;
+  feedback.className = "myth-feedback";
+  nextButton.hidden = true;
+  hasAnswered = false;
+  answerButtons.forEach((button) => { button.disabled = false; });
+  if (moveFocus) questionHeading.focus();
+}
 
-      const regionLabels = {
-        type: "scattergeo",
-        mode: "text",
-        lon: lons,
-        lat: lats,
-        text: data.map((d) => `${d.region}: ${d.count}`),
-        textposition: "top center",
-        hovertemplate: "<b>%{text}</b><extra></extra>",
-        name: "Geographic regions",
-        customdata: data.map((regionData) => regionData.region),
-        textfont: {
-          color: "#183b3f",
-          size: 10,
-          family: "DM Sans, sans-serif"
-        }
-      };
+function showResult() {
+  progressBar.value = snakebiteStatements.length;
+  questionPanel.hidden = true;
+  answerControls.hidden = true;
+  feedback.hidden = true;
+  nextButton.hidden = true;
+  resultPanel.hidden = false;
+  finalScore.textContent = `${correctAnswers}/${snakebiteStatements.length}`;
+  resultMessage.textContent = correctAnswers === snakebiteStatements.length
+    ? "Excellent work. Keep relying on qualified emergency and medical guidance."
+    : "Thanks for playing. For a real bite, contact emergency services or a poison center immediately.";
+  restartButton.focus();
+}
 
-      const layout = {
-        margin: { t: 20, r: 10, b: 20, l: 10 },
-        paper_bgcolor: "rgba(0,0,0,0)",
-        plot_bgcolor: "rgba(0,0,0,0)",
-        geo: {
-          projection: {
-            type: "natural earth"
-          },
-          showland: true,
-          landcolor: "#f2efe7",
-          showcountries: true,
-          countrycolor: "#d7ddd5",
-          coastlinecolor: "#d7ddd5",
-          showocean: true,
-          oceancolor: "#edf6f7",
-          showframe: false,
-          lataxis: { range: [-60, 85] },
-          lonaxis: { range: [-180, 180] }
-        },
-        font: {
-          family: "DM Sans, sans-serif",
-          color: "#183b3f"
-        },
-        annotations: [
-          {
-            text: "Recorded snake species",
-            x: 0.02,
-            y: 0.98,
-            xref: "paper",
-            yref: "paper",
-            showarrow: false,
-            font: { size: 12, color: "#183b3f" }
-          }
-        ]
-      };
+answerButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    if (hasAnswered) return;
+    hasAnswered = true;
+    const item = snakebiteStatements[currentQuestion];
+    const isCorrect = button.dataset.answer === item.answer;
+    if (isCorrect) correctAnswers += 1;
+    scoreLabel.textContent = `${correctAnswers}/${snakebiteStatements.length} correct`;
+    answerButtons.forEach((answerButton) => { answerButton.disabled = true; });
+    feedback.textContent = `${isCorrect ? "Correct." : `The answer is ${item.answer.toLowerCase()}.`} ${item.explanation}`;
+    feedback.classList.toggle("is-incorrect", !isCorrect);
+    feedback.hidden = false;
+    nextButton.textContent = currentQuestion === snakebiteStatements.length - 1
+      ? "See your score"
+      : "Next statement";
+    nextButton.hidden = false;
+    nextButton.focus();
+  });
+});
 
-      const config = {
-        responsive: true,
-        displayModeBar: false
-      };
+nextButton.addEventListener("click", () => {
+  currentQuestion += 1;
+  if (currentQuestion === snakebiteStatements.length) {
+    showResult();
+  } else {
+    renderQuestion(true);
+  }
+});
 
-      Plotly.newPlot("snake-region-map", [...continentTraces, regionLabels], layout, config).then((map) => {
-        map.on("plotly_click", (event) => {
-          const clickedPoint = event.points?.[0];
-          let clickedRegion = clickedPoint?.customdata;
-          if (Array.isArray(clickedRegion)) clickedRegion = clickedRegion[0];
-          const continentName = continentForRegion[clickedRegion] || clickedRegion;
-          showContinentSpecies(continentName);
-        });
-      });
+restartButton.addEventListener("click", () => {
+  currentQuestion = 0;
+  correctAnswers = 0;
+  renderQuestion(true);
+});
 
-      window.addEventListener("resize", () => Plotly.Plots.resize(document.getElementById("snake-region-map")));
-    })
-    .catch((error) => {
-      const target = document.getElementById("snake-region-map");
-      target.innerHTML = "<p class=\"map-error\">The region data could not be loaded. Please refresh the page.</p>";
-      console.error(error);
-    });
+renderQuestion();
 </script>
 
 
